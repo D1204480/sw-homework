@@ -121,6 +121,7 @@ public class Main {
         System.out.println("AL排序後: ");
         for (Team team: teamALlist) {
           System.out.println(team + "\t");
+          Team teamOrder = new Team();
         }
 
         System.out.println("NL排序後: ");
@@ -129,21 +130,21 @@ public class Main {
         }
 
         // 輸出格式
-        (AMERICAN LEAGE)
-        KC  6 -----
-            HOU 3 ----- ? -----
-            CLE 2 ----- ?
-            DET 5 -----
-            BAL 4 ----- ? -----
-            NYY 1 ----- ? ----- ?
-            ---- ?
-                AZ  6 ----- ? ----- ? ----- ?
-            MIL 3 -----
-            PHI 2 ----
-        NYM 5 ----- ? ----- ?
-            SD  4 -----
-            LAD 1 -----
-            (NATIONAL LEAGE)
+        System.out.println("(AMERICAN LEAGE)\n" );
+//        KC  6 -----
+//            HOU 3 ----- ? -----
+//            CLE 2 ----- ?
+//            DET 5 -----
+//            BAL 4 ----- ? -----
+//            NYY 1 ----- ? ----- ?
+//            ---- ?
+//                AZ  6 ----- ? ----- ? ----- ?
+//            MIL 3 -----
+//            PHI 2 ----
+//        NYM 5 ----- ? ----- ?
+//            SD  4 -----
+//            LAD 1 -----
+//            (NATIONAL LEAGE)
 
       } catch (FileNotFoundException e) {
         logger.log(Level.SEVERE, "發生找不到檔案: " + e.getMessage());
