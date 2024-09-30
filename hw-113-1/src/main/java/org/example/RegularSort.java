@@ -170,17 +170,17 @@ public class RegularSort {
         // 取得NL聯盟前3名
         Team NLp1 = null; Team NLp2 = null; Team NLp3 = null;
         for (int i = 0; i < 1; i++) {
-          NLp1 = teamALtop3list.get(0);
-          NLp2 = teamALtop3list.get(1);
-          NLp3 = teamALtop3list.get(2);
+          NLp1 = teamNLtop3list.get(0);
+          NLp2 = teamNLtop3list.get(1);
+          NLp3 = teamNLtop3list.get(2);
         }
 
         // 取得NL聯盟4~6名
         Team NLp4 = null; Team NLp5 = null; Team NLp6 = null;
         for (int i = 0; i < 1; i++) {
-          NLp4 = teamALlist.get(0);
-          NLp5 = teamALlist.get(1);
-          NLp6 = teamALlist.get(2);
+          NLp4 = teamNLlist.get(0);
+          NLp5 = teamNLlist.get(1);
+          NLp6 = teamNLlist.get(2);
         }
 
 //        System.out.println( ALp1);
@@ -194,19 +194,19 @@ public class RegularSort {
         System.out.println("排程表: ");
         // 輸出格式
         System.out.println("(AMERICAN LEAGE)" );
-        System.out.printf("%-17s 6 ----- \n", ALp6.getTeamName());
-        System.out.printf("%-17s 3 ----- ? -----\n", ALp3.getTeamName());
-        System.out.printf("%-25s 2 ----- ?\n", ALp2.getTeamName());
-        System.out.printf("%-17s 5 -----\n", ALp5.getTeamName());
-        System.out.printf("%-17s 4 ----- ? -----\n", ALp4.getTeamName());
-        System.out.printf("%-25s 1 ----- ? ----- ?\n", ALp1.getTeamName());
-        System.out.printf("%-43s---- ?\n",' ');
-        System.out.printf("%-17s 6 ----- ? ----- ? ----- ?\n", NLp6.getTeamName());
-        System.out.printf("%-17s 3 -----\n", NLp3.getTeamName());
-        System.out.printf("%-25s 2 ----\n", NLp2.getTeamName());
-        System.out.printf("%-17s 5 ----- ? ----- ?\n", NLp5.getTeamName());
-        System.out.printf("%-17s 4 -----\n", NLp4.getTeamName());
-        System.out.printf("%-25s 1 -----\n", NLp1.getTeamName());
+        System.out.printf("%-21s 6 ----- \n", ALp6.getTeamName());
+        System.out.printf("%-21s 3 ----- ? -----\n", ALp3.getTeamName());
+        System.out.printf("%-29s 2 ----- ?\n", ALp2.getTeamName());
+        System.out.printf("%-21s 5 -----\n", ALp5.getTeamName());
+        System.out.printf("%-21s 4 ----- ? -----\n", ALp4.getTeamName());
+        System.out.printf("%-29s 1 ----- ? ----- ?\n", ALp1.getTeamName());
+        System.out.printf("%-47s---- ?\n",' ');
+        System.out.printf("%-21s 6 ----- ? ----- ? ----- ?\n", NLp6.getTeamName());
+        System.out.printf("%-21s 3 -----\n", NLp3.getTeamName());
+        System.out.printf("%-29s 2 ----\n", NLp2.getTeamName());
+        System.out.printf("%-21s 5 ----- ? ----- ?\n", NLp5.getTeamName());
+        System.out.printf("%-21s 4 -----\n", NLp4.getTeamName());
+        System.out.printf("%-29s 1 -----\n", NLp1.getTeamName());
         System.out.println("(NATIONAL LEAGE)");
 
       } catch (FileNotFoundException e) {
