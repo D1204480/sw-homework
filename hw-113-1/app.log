@@ -4,3 +4,19 @@
 資訊: 這是一條 INFO 等級的日誌訊息
 9月 29, 2024 10:35:24 下午 org.example.Main main
 資訊: 這是一條 INFO 等級的日誌訊息
+9月 30, 2024 11:19:41 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:20:09 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:23:47 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:24:01 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:24:19 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:26:32 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:28:10 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+9月 30, 2024 11:30:09 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt

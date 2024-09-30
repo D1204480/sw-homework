@@ -25,11 +25,11 @@ public class RegularSort {
       logger.addHandler(fileHandler);
 //      logger.info("這是一條 INFO 等級的日誌訊息");
 
-      String fileName = "MLB_2023_regular.txt";  // 要打開的檔案名稱
+      String fileName = "MLB_2024_regular.txt";  // 要打開的檔案名稱
       List<Team> teamALlist = new ArrayList<>();  // 建立陣列存放AL球隊
-      List<Team> teamALtop3list = new ArrayList<>();  // 建立陣列存放AL球隊
+      List<Team> teamALtop3list = new ArrayList<>();  // 建立陣列存放AL top3球隊
       List<Team> teamNLlist = new ArrayList<>();  // 建立陣列存放NL球隊
-      List<Team> teamNLtop3list = new ArrayList<>();  // 建立陣列存放AL球隊
+      List<Team> teamNLtop3list = new ArrayList<>();  // 建立陣列存放AL top3球隊
       List<Team> teamALEastlist = new ArrayList<>();  // 建立陣列存放AL East球隊
       List<Team> teamALCenterlist = new ArrayList<>();  // 建立陣列存放AL Center球隊
       List<Team> teamALWestlist = new ArrayList<>();  // 建立陣列存放AL West球隊
@@ -37,8 +37,10 @@ public class RegularSort {
       List<Team> teamNLCenterlist = new ArrayList<>();  // 建立陣列存放NL Center球隊
       List<Team> teamNLWestlist = new ArrayList<>();  // 建立陣列存放NL West球隊
 
-      // 開檔
+      // 開檔案
       try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        logger.info("嘗試開啟檔案: " + fileName);
+
         String line = br.readLine();
         while (line != null) {  // 讀每一row直到沒資料
           String[] data = line.split(",");
@@ -46,7 +48,7 @@ public class RegularSort {
           if (data.length < 4) {  // 跳過不足4個欄位的資料
             continue;
           }
-          assert data.length >= 4: "欄位數不足4欄";
+          assert data.length >= 4: "欄位數不足4欄，資料格式可能有誤";
 
           /*
           用if/else區分League:
@@ -138,6 +140,7 @@ public class RegularSort {
         /*
         各區冠軍進入top3陣列, 其餘隊伍分別進入AL/NL陣列
          */
+
         processTop6(teamALtop3list, teamALlist, teamALEastlist);
         processTop6(teamALtop3list, teamALlist, teamALCenterlist);
         processTop6(teamALtop3list, teamALlist, teamALWestlist);
@@ -250,11 +253,13 @@ public class RegularSort {
         e.printStackTrace();
       }
     } // end of for()
+    assert teamList.size() == 5: "每個區應有5個隊伍";
   } // end of processTeams
 
   private static void processTop6(List<Team> top3List, List<Team> league, List<Team> teamList) {
     for (int i = 0; i < 1; i++) {
 //          System.out.println(teamALEastlist.get(i));
+      assert teamList.size() == 5: "每區應有5個隊伍";
       Team p1 = null;
       Team p2 = null;
       Team p3 = null;
@@ -273,6 +278,7 @@ public class RegularSort {
       league.add(p4);
       league.add(p5);
     }
+
   } // end of processTop6
 
 } // end of RegularSort
