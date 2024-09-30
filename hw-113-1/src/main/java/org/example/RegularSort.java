@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -221,13 +222,52 @@ public class RegularSort {
                 e.printStackTrace();
               }
             } // end of for()
+
+            System.out.println("AL EAST 排序前: ");
+            for (Team team: teamALEastlist) {
+              System.out.println(team);
+            }
+
+//            System.out.println("AL CENTER 排序前: ");
+//            for (Team team: teamALCenterlist) {
+//              System.out.println(team);
+//            }
+//
+//            System.out.println("AL WEST 排序前: ");
+//            for (Team team: teamALWestlist) {
+//              System.out.println(team);
+//            }
+//
+//            System.out.println("NL EAST 排序前: ");
+//            for (Team team: teamNLEastlist) {
+//              System.out.println(team);
+//            }
+//
+//            System.out.println("NL CENTER 排序前: ");
+//            for (Team team: teamNLCenterlist) {
+//              System.out.println(team);
+//            }
+//
+//            System.out.println("NL WEST 排序前: ");
+//            for (Team team: teamNLWestlist) {
+//              System.out.println(team);
+//            }
+
+            //排序
+            Collections.sort(teamALEastlist, new Team());
+            Collections.sort(teamALCenterlist, new Team());
+            Collections.sort(teamALWestlist, new Team());
+            Collections.sort(teamNLEastlist, new Team());
+            Collections.sort(teamNLCenterlist, new Team());
+            Collections.sort(teamNLWestlist, new Team());
+
+            System.out.println("AL EAST 排序後: ");
+            for (Team team: teamALEastlist) {
+              System.out.println(team);
+            }
+
           } // end of if/else
         } // end of while()
-
-        System.out.println("AL EAST");
-        for (Team team: teamALEastlist) {
-          System.out.print(team + "\t");
-        }
 
       } catch (FileNotFoundException e) {
         logger.log(Level.SEVERE, "發生找不到檔案: " + e.getMessage());
