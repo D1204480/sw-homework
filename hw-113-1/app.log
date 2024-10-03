@@ -46,3 +46,23 @@ INFO: 嘗試開啟檔案: MLB_2024_regular.txt
 SEVERE: 發生處理數字格式錯誤: For input string: ".574"
 10月 02, 2024 12:35:40 上午 org.example.RegularSort main
 INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+10月 03, 2024 12:56:45 上午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.csv
+10月 03, 2024 12:57:45 上午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.csv
+10月 03, 2024 12:59:00 上午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+10月 03, 2024 12:59:00 上午 org.example.RegularSort main
+INFO: 程式正確執行結束
+10月 03, 2024 9:03:33 上午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+10月 03, 2024 9:03:33 上午 org.example.RegularSort main
+INFO: 程式正確執行結束
+10月 03, 2024 12:56:34 下午 org.example.RegularSort main
+INFO: 嘗試開啟檔案: MLB_2024_regular.txt
+10月 03, 2024 12:56:34 下午 org.example.RegularSort main
+INFO: 程式正確執行結束
+10月 03, 2024 1:45:18 下午 org.example.RegularSort_csv main
+INFO: 嘗試開啟檔案: data/MLB_2024_regular.csv
+10月 03, 2024 1:45:18 下午 org.example.RegularSort_csv main
+INFO: 程式正確執行結束
