@@ -1,0 +1,12 @@
+球隊,球場名稱,座位數,季後賽滿座率,世界大賽滿座率
+洛杉磯道奇,Dodger Stadium,56k,100%,100%
+聖地牙哥教士,Petco Park,40k,100%,100%
+密爾瓦基釀酒人,American Family Field,42k,97%,100%
+紐約大都會,Citi Field,41.8k,100%,100%
+亞特蘭大勇士,Truist Park,41k,100%,100%
+巴爾的摩金鶯,Oriole Park,45k,100%,100%
+紐約洋基,Yankee Stadium,47k,100%,100%
+克里夫蘭守護者,Progressive Field,34.8k,98%,100%
+休士頓太空人,Minute Maid Park,41k,100%,100%
+堪薩斯市皇家,Kauffman Stadium,37k,100%,100%
+底特律老虎,Comerica Park,41k,100%,100%
