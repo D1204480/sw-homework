@@ -1,10 +1,8 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -19,7 +17,7 @@ public class RegularSort_csv {
   public static void main(String[] args) {
 
     try {
-      // 設定 FileHandler，將日誌寫入檔案 "app.log"
+      // 設定 FileHandler，將日誌寫入檔案 "RegularSort_csv.log"
       FileHandler fileHandler = new FileHandler("RegularSort_csv.log", true); // true 表示追加到文件中
       fileHandler.setFormatter(new SimpleFormatter()); // 設定格式為簡單格式
       logger.addHandler(fileHandler);
@@ -27,6 +25,8 @@ public class RegularSort_csv {
 
       String fileName = "MLB_2024_regular.csv";  // 要打開的檔案名稱
       String filePath = "data/" + fileName;
+      String outputFile = "MLB_2024_wildCard.csv"; // 寫出去的檔名
+      String outputPath = "data/" + outputFile;
 
       List<Team> _ALlist = new ArrayList<>();  // 建立陣列存放AL球隊
       List<Team> _ALtop3List = new ArrayList<>();  // 建立陣列存放AL top3球隊
@@ -222,6 +222,17 @@ public class RegularSort_csv {
         System.out.printf("%-29s 1 -----\n", NLp1.getTeamName());
         System.out.println("(NATIONAL LEAGUE)");
 
+        // 集合AL/NL進入wildCard名單(AL/NL聯盟前6名)
+        List<Team> wildCardTeams = Arrays.asList(
+            _ALtop3List.get(0), _ALtop3List.get(1), _ALtop3List.get(2),
+            _ALlist.get(0), _ALlist.get(1), _ALlist.get(2),
+            _NLtop3List.get(0), _NLtop3List.get(1), _NLtop3List.get(2),
+            _NLlist.get(0), _NLlist.get(1), _NLlist.get(2)
+        );
+
+        // 把AL/NL前6隊伍寫出檔案
+        writeFile(outputPath, wildCardTeams);
+
         logger.info("程式正確執行結束");
 
       } catch (FileNotFoundException e) {
@@ -300,5 +311,38 @@ public class RegularSort_csv {
       league.add(p5);
     }
   } // end of processTop6
+
+  private static void writeFile(String outputPath, List<Team> teamList) {
+    try (FileWriter fileWriter = new FileWriter(outputPath)) {
+      String header = "League, Team, W, L, PCT, Position";  // 標題
+      fileWriter.write(header);
+      fileWriter.write("\n"); // 跳一行
+
+      int count = 0;  // position 排名順位
+      for (Team team: teamList) {
+        fileWriter.write(generateOutputString(team));
+        count++;
+        if (team.getLeague().startsWith("AL")) {
+          fileWriter.write(String.valueOf(count));
+          fileWriter.write("\n");
+
+        } else {
+          fileWriter.write(String.valueOf(count - 6));  // NL聯盟排在AL聯盟後面, 所以要扣掉前6位, 才會從1開始
+          fileWriter.write("\n");
+        }
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private static String generateOutputString(Team team) {
+    String record = team.getLeague() + ","
+        + team.getTeamName() + ","
+        + team.getWin() + ","
+        + team.getLose() + ","
+        + team.getPct() + ",";
+    return record;
+  }
 
 } // end of RegularSort
