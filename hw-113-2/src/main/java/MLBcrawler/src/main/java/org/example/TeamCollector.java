@@ -1,4 +1,4 @@
-package org.example;
+package MLBcrawler.src.main.java.org.example;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
