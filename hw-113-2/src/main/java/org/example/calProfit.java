@@ -145,6 +145,6 @@ public class calProfit {
   }
 
 
-  private
+
 
   } // end of Profit

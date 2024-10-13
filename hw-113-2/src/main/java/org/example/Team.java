@@ -15,6 +15,7 @@ public class Team implements Comparator<Team> {
   private int win;
   private int lose;
   private float pct;
+  private int position;
   private String courtName;
   private int courtSeats;
   private int playoffsSOrate;  // 季後賽滿座率(seat occupancy rate)
