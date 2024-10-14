@@ -163,13 +163,13 @@ public class calPlayoffProfit {
 //        System.out.println("value: " + entry.getValue());
 //      }
 
-      // 印出teamDataMap查看
+      // 印出_ALteamDataMap查看
 //      for (Map.Entry<Integer, Team> entry : _ALteamDataMap.entrySet()) {
 //        System.out.println("key: " + entry.getKey());
 //        System.out.println("value: " + entry.getValue());
 //      }
 
-      // 印出teamDataMap查看
+      // 印出_NLteamDataMap查看
 //      for (Map.Entry<Integer, Team> entry : _NLteamDataMap.entrySet()) {
 //        System.out.println("key: " + entry.getKey());
 //        System.out.println("value: " + entry.getValue());
@@ -179,7 +179,7 @@ public class calPlayoffProfit {
       // 計算分潤
 
       // 計算各隊分潤(hard-coding)
-      calProfit(_ALteamDataMap, "New York Yankees", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "New York Yankees", "AL");
 
 
     } catch (IOException e) {
@@ -192,9 +192,9 @@ public class calPlayoffProfit {
   /* 計算分潤:
       1. P1,P2最佳: LDS(3主+2客) + LCS(高種子:4主+3客, 低種子: 3主+4客) + WS(高種子:4主+3客, 低種子: 3主+4客)
          P1,P2最差: LDS(2主+1客)
-      2. P3最佳: WILD(3主) + LDS(3主+2客) + LCS(高種子:4主+3客, 低種子: 3主+4客) + WS(高種子:4主+3客, 低種子: 3主+4客)
+      2. P3最佳: WILD(3主) + LDS(2主+3客) + LCS(高種子:4主+3客, 低種子: 3主+4客) + WS(高種子:4主+3客, 低種子: 3主+4客)
          P3最差: LDS(2主)
-      3. P4最佳: WILD(3主) + LDS(3主+2客) + LCS(高種子:4主+3客, 低種子: 3主+4客) + WS(高種子:4主+3客, 低種子: 3主+4客)
+      3. P4最佳: WILD(3主) + LDS(2主+3客) + LCS(高種子:4主+3客, 低種子: 3主+4客) + WS(高種子:4主+3客, 低種子: 3主+4客)
          P4最差: LDS(2主)
       4. P5最佳: WILD(3客) + LDS(2主+3客) + LCS(高種子:4主+3客, 低種子: 3主+4客) + WS(高種子:4主+3客, 低種子: 3主+4客)
          P5最差: LDS(2客)
@@ -203,7 +203,7 @@ public class calPlayoffProfit {
       6. wild card: P3 vs P6, P4 vs P5
       7. 公式:(座位數) * (滿座率) * (票價450) * (客場分潤15%) * (場數)
    */
-  private static void calProfit(Map<Integer, Team> teamMap, String teamName, String league) {
+  private static void calProfit(Map<Integer, Team> teamMap, Map<Integer, Team> opponentTeamMap, String teamName, String league) {
     int ticketPrice = 450;
     int worldTicket = 800;
     float homeShare = 0.85F;
@@ -233,7 +233,7 @@ public class calPlayoffProfit {
         // A.LDS
         int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_homeGames);
 
-        Team LDS_opponent = findOpponent("LDS", 1, teamMap, league);
+        Team LDS_opponent = findOpponent("LDS", 1, teamMap, opponentTeamMap, league);
         int LDS_awaySeats = Integer.parseInt(LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
         float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
         int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_awayGames);
@@ -243,17 +243,20 @@ public class calPlayoffProfit {
         // B.LCS
         int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_homeGames);
 
-        Team LCS_opponent = findOpponent("LCS", 1, teamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "000"));
+        Team LCS_opponent = findOpponent("LCS", 1, teamMap, opponentTeamMap, league);
+        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
         float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
         int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_awayGames);
 
-        int total_LCS_earning = (int) (LCS_homeProfit + LCS_awayProfit);
+        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
 
         // C.world series
         int ws_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * worldTicket * homeShare * best_LCS_World_homeGames);
-        int ws_awayProfit = (int) (56000 * 1 * worldTicket * awayShare * best_LCS_World_awayGames);  // NL最賺球場: Dodger
-        int total_WS_earning = (int) (ws_homeProfit + ws_awayProfit);
+        Team ws_opponent = findOpponent("WS", 1, teamMap, opponentTeamMap, league);
+        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_awayGames);  // NL最賺球場: Dodger
+        int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
         total_P1earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
@@ -261,56 +264,34 @@ public class calPlayoffProfit {
         // A.LDS
         int worst_LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_LDS_homeGames);
 
-        Team worst_LDS_opponent = findOpponent("LDS", 1, teamMap, league);
+        Team worst_LDS_opponent = findOpponent("LDS", 1, teamMap, opponentTeamMap, league);
         int worst_LDS_awaySeats = Integer.parseInt(worst_LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
         float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
         int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_awayGames);
 
-        total_worst_LDS_earning = (int) (worst_LDS_homeProfit + worst_LDS_awayProfit);
+        total_worst_LDS_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
       }
     }
-    System.out.println(teamName + " 預估最佳獲利: " + total_P1earning);
-    System.out.println(teamName + " 預估最差獲利: " + total_worst_LDS_earning);
+    System.out.println(teamName + " 預估最佳獲利: " + String.format("%,d", total_P1earning) + " USD");
+    System.out.println(teamName + " 預估最差獲利: " + String.format("%,d", total_worst_LDS_earning) + " USD");
 
-
-//    for (Map.Entry<String, Team> entry : teamMap.entrySet()) {
-//      if (entry.getKey().equals(teamName)) {  // 比對key
-//        Team team = teamMap.get(teamName);  // 找到key, 則取出team物件
-//
-//        // 排行1
-//        if (team.getPosition() == 1) {
-//          int tickitPrice = 450;
-//          int worldTickit = 800;
-//          float homeShare = 0.85F;
-//          float awayShare = 1 - homeShare;
-//          int LDShomeGame = 3;
-//          int homeSeatsInt = Integer.parseInt(team.getCourtSeats().replace("k", "000"));
-//          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-//          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
-//
-//          // A.LDS
-//          double LDS_homeProfit = homeSeatsInt * playoffSOrateFloat * tickitPrice * homeShare * LDShomeGame;
-////          double LDS_awayProfit =
-//
-//        }
-//      }
 
   } // end of calProfit
 
 
-  private static Team findOpponent(String game, int position, Map<Integer, Team> teamMap, String league) {
+  private static Team findOpponent(String game, int position, Map<Integer, Team> teamMap, Map<Integer, Team> opponentTeamMap, String league) {
     // LDS
     if (game.equals("LDS")) {
       if (position == 1) {
         // 找出是P4 or P5
-        Team p4 = getTeamByCourtSize(4, teamMap);
-        Team p5 = getTeamByCourtSize(5, teamMap);
+        Team p4 = getTeamByCourtSize(4, teamMap, opponentTeamMap);
+        Team p5 = getTeamByCourtSize(5, teamMap, opponentTeamMap);
         return decideBetweenTeams(p4, p5);
 
       } else if (position == 2) {
         // 找出是P3 or P6
-        Team p3 = getTeamByCourtSize(3, teamMap);
-        Team p6 = getTeamByCourtSize(6, teamMap);
+        Team p3 = getTeamByCourtSize(3, teamMap, opponentTeamMap);
+        Team p6 = getTeamByCourtSize(6, teamMap, opponentTeamMap);
         return decideBetweenTeams(p3, p6);
       }
     }
@@ -319,16 +300,16 @@ public class calPlayoffProfit {
     if (game.equals("LCS")) {
       if (position == 1 || position == 4 || position == 5) {
         // 找出是P2 or P3 or P6
-        Team p2 = getTeamByCourtSize(2, teamMap);
-        Team p3 = getTeamByCourtSize(3, teamMap);
-        Team p6 = getTeamByCourtSize(6, teamMap);
+        Team p2 = getTeamByCourtSize(2, teamMap, opponentTeamMap);
+        Team p3 = getTeamByCourtSize(3, teamMap, opponentTeamMap);
+        Team p6 = getTeamByCourtSize(6, teamMap, opponentTeamMap);
         return decideBetweenTeams(p2, p3, p6);
 
       } else if (position == 2 || position == 3 || position == 6) {
         // 找出是P1 or P4 or P5
-        Team p1 = getTeamByCourtSize(1, teamMap);
-        Team p4 = getTeamByCourtSize(4, teamMap);
-        Team p5 = getTeamByCourtSize(5, teamMap);
+        Team p1 = getTeamByCourtSize(1, teamMap, opponentTeamMap);
+        Team p4 = getTeamByCourtSize(4, teamMap, opponentTeamMap);
+        Team p5 = getTeamByCourtSize(5, teamMap, opponentTeamMap);
         return decideBetweenTeams(p1, p4, p5);
       }
     }
@@ -337,21 +318,55 @@ public class calPlayoffProfit {
         AL: 找出(NL座位*世界大戰滿座率)最高的球場: Yankee
         NL: 找出(AL座位*世界大戰滿座率)最高的球場: Dodger
        */
-    if (game.equals("world")) {
-      Team p1 = getTeamByCourtSize(1, teamMap);
-      Team p2 = getTeamByCourtSize(2, teamMap);
-      Team p3 = getTeamByCourtSize(3, teamMap);
-      Team p4 = getTeamByCourtSize(4, teamMap);
-      Team p5 = getTeamByCourtSize(5, teamMap);
-      Team p6 = getTeamByCourtSize(6, teamMap);
-      return decideBetweenTeams(p1, p2, p3, p4, p5, p6);
+    if (game.equals("WS")) {
+      if (league.startsWith("AL")) {
+
+        // We are in AL league, so find the best NL team
+        Team bestOpponent = null;
+        float highestEarning = -1;
+
+        for (Team team : opponentTeamMap.values()) {  // 找對方聯盟Map的value物件
+          if (team.getLeague().startsWith("NL")) {
+            // Calculate the court earning for this NL team
+            float earning = worldSeriesEarning(team);
+
+            // Check if this team has the highest earning potential
+            if (earning > highestEarning) {
+              highestEarning = earning;
+              bestOpponent = team;
+            }
+          }
+        }
+        return bestOpponent;  // Return the best NL team for the AL league
+
+      } else if (league.startsWith("NL")) {
+        // Similarly, handle the NL league by finding the best AL team
+        Team bestOpponent = null;
+        float highestEarning = -1;
+
+        // Loop through the AL league teams
+        for (Team team : opponentTeamMap.values()) {
+          if (team.getLeague().startsWith("AL")) {  // Ensure the team is from the AL league
+
+            // Calculate the court earning for this AL team
+            float earning = worldSeriesEarning(team);
+
+            // Check if this team has the highest earning potential
+            if (earning > highestEarning) {
+              highestEarning = earning;
+              bestOpponent = team;
+            }
+          }
+        }
+        return bestOpponent;  // Return the best AL team for the NL league
+      }
     }
 
     return null; // If no opponent found
   }
 
   // 找出第position的隊伍
-  private static Team getTeamByCourtSize(int position, Map<Integer, Team> teamMap) {
+  private static Team getTeamByCourtSize(int position, Map<Integer, Team> teamMap, Map<Integer, Team> opponentTeamMap) {
     for (int key : teamMap.keySet()) {
       if (key == position) {  // 找出第position的隊伍(物件)
         return teamMap.get(key);
@@ -368,9 +383,9 @@ public class calPlayoffProfit {
 
     for (int i = 0; i < teams.length; i++) {
       Float courtEarning = courtEarning(teams[i]);
-      if (courtEarning > higherCourtEarning) {
-        higherCourtEarning = courtEarning;
-        bestTeam = teams[i];  // 更新bestTeam
+      if (teams[i] != null && courtEarning(teams[i]) > higherCourtEarning) {
+        higherCourtEarning = courtEarning(teams[i]);
+        bestTeam = teams[i];   // 更新bestTeam
       }
     }
     return bestTeam;
@@ -382,5 +397,20 @@ public class calPlayoffProfit {
     float SOrate = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
     return seats * SOrate;
   }
+
+  private static float worldSeriesEarning(Team team) {
+    // Check if courtSeats and worldSeriesSOrate are not null before proceeding
+    if (team.getCourtSeats() != null && team.getWorldSeriesSOrate() != null) {
+      // Parse the court seats and world series sell-out rate
+      int seats = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+      float wsSOrate = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+      return seats * wsSOrate;
+
+    } else {
+      return 0;  // Returning 0 if any value is missing
+    }
+  }
+
+
 
 } // end of calPlayoffProfit
