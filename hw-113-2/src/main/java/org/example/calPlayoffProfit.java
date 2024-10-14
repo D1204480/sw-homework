@@ -180,20 +180,20 @@ public class calPlayoffProfit {
 
       // 計算各隊分潤(hard-coding)
       // AL聯盟
-//      calProfit(_ALteamDataMap, _NLteamDataMap, "New York Yankees", "AL");
-//      calProfit(_ALteamDataMap, _NLteamDataMap, "Cleveland Guardians", "AL");
-//      calProfit(_ALteamDataMap, _NLteamDataMap, "Houston Astros", "AL");
-//      calProfit(_ALteamDataMap, _NLteamDataMap, "Baltimore Orioles", "AL");
-//      calProfit(_ALteamDataMap, _NLteamDataMap, "Detroit Tigers", "AL");
-//      calProfit(_ALteamDataMap, _NLteamDataMap, "Kansas City Royals", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "New York Yankees", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "Cleveland Guardians", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "Houston Astros", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "Baltimore Orioles", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "Detroit Tigers", "AL");
+      calProfit(_ALteamDataMap, _NLteamDataMap, "Kansas City Royals", "AL");
 
       // NL聯盟
-      calProfit(_NLteamDataMap, _ALteamDataMap, "Los Angeles Dodgers", "NL");
-      calProfit(_NLteamDataMap, _ALteamDataMap, "Philadelphia Phillies", "NL");
-      calProfit(_NLteamDataMap, _ALteamDataMap, "Milwaukee Brewers", "NL");
-      calProfit(_NLteamDataMap, _ALteamDataMap, "San Diego Padres", "NL");
-      calProfit(_NLteamDataMap, _ALteamDataMap, "Arizona Diamondbacks", "NL");
-      calProfit(_NLteamDataMap, _ALteamDataMap, "Atlanta Braves", "NL");
+//      calProfit(_NLteamDataMap, _ALteamDataMap, "Los Angeles Dodgers", "NL");
+//      calProfit(_NLteamDataMap, _ALteamDataMap, "Philadelphia Phillies", "NL");
+//      calProfit(_NLteamDataMap, _ALteamDataMap, "Milwaukee Brewers", "NL");
+//      calProfit(_NLteamDataMap, _ALteamDataMap, "San Diego Padres", "NL");
+//      calProfit(_NLteamDataMap, _ALteamDataMap, "Arizona Diamondbacks", "NL");
+//      calProfit(_NLteamDataMap, _ALteamDataMap, "Atlanta Braves", "NL");
 
 
 
@@ -229,8 +229,8 @@ public class calPlayoffProfit {
     int best_LCS_World_awayGames = 7 - best_LCS_World_homeGames;
     int worst_LDS_homeGames = 2;
     int worst_LDS_awayGames = 3 - worst_LDS_homeGames;
-    int P1_best_earning = 0;
-    int P1_worst_earning = 0;
+    int best_earning = 0;
+    int worst_earning = 0;
 
     /* P1最佳獲利:
        A.LDS: 3主+2客(P4 or P5)
@@ -274,7 +274,7 @@ public class calPlayoffProfit {
         int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_awayGames);  // NL最賺球場: Dodger
         int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        P1_best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
+        best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
         // P1最差獲利: LDS (2主+1客)
         // A.LDS
@@ -285,7 +285,9 @@ public class calPlayoffProfit {
         float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
         int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_awayGames);
 
-        P1_worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
+        worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
+        System.out.println("P1 best" + best_earning);
+        System.out.println("P1 worst" + worst_earning);
 
       } else if (key == 2) {
 
@@ -326,7 +328,7 @@ public class calPlayoffProfit {
         int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_awayGames);  // NL最賺球場: Dodger
         int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        P1_best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
+        best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
         // P1最差獲利: LDS (2主+1客)
         // A.LDS
@@ -337,12 +339,15 @@ public class calPlayoffProfit {
         float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
         int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_awayGames);
 
-        P1_worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
+        worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
+
+        System.out.println("P2 best" + best_earning);
+        System.out.println("P2 worst" + worst_earning);
 
       }
     }
-    System.out.println(teamName + " 預估最佳獲利: " + String.format("%,d", P1_best_earning) + " USD");
-    System.out.println(teamName + " 預估最差獲利: " + String.format("%,d", P1_worst_earning) + " USD");
+    System.out.println(teamName + " 預估最佳獲利: " + String.format("%,d", best_earning) + " USD");
+    System.out.println(teamName + " 預估最差獲利: " + String.format("%,d", worst_earning) + " USD");
 
 
   } // end of calProfit

@@ -180,21 +180,21 @@ public class calPlayoffProfit_v2 {
 
       // 計算各隊分潤(hard-coding)
       // AL聯盟
-      int[] P1 = calProfit(_ALteamDataMap, _NLteamDataMap, "New York Yankees", "AL");
-      int[] P2 = calProfit(_ALteamDataMap, _NLteamDataMap, "Cleveland Guardians", "AL");
-      int[] P3 = calProfit(_ALteamDataMap, _NLteamDataMap, "Houston Astros", "AL");
+       calProfit(_ALteamDataMap, _NLteamDataMap, "New York Yankees", "AL");
+       calProfit(_ALteamDataMap, _NLteamDataMap, "Cleveland Guardians", "AL");
+       calProfit(_ALteamDataMap, _NLteamDataMap, "Houston Astros", "AL");
       calProfit(_ALteamDataMap, _NLteamDataMap, "Baltimore Orioles", "AL");
       calProfit(_ALteamDataMap, _NLteamDataMap, "Detroit Tigers", "AL");
       calProfit(_ALteamDataMap, _NLteamDataMap, "Kansas City Royals", "AL");
 
-      for (int i = 0 ; i < 1; i++) {
-        System.out.println("最佳: " + P1[0]);
-        System.out.println("最差: " + P1[1]);
-        System.out.println("best: " + P2[0]);
-        System.out.println("worst: " + P2[1]);
-        System.out.println("best: " + P3[0]);
-        System.out.println("worst: " + P3[1]);
-      }
+//      for (int i = 0 ; i < 1; i++) {
+//        System.out.println("最佳: " + P1[0]);
+//        System.out.println("最差: " + P1[1]);
+//        System.out.println("best: " + P2[0]);
+//        System.out.println("worst: " + P2[1]);
+//        System.out.println("best: " + P3[0]);
+//        System.out.println("worst: " + P3[1]);
+//      }
 
       // NL聯盟
       calProfit(_NLteamDataMap, _ALteamDataMap, "Los Angeles Dodgers", "NL");
@@ -287,7 +287,7 @@ public class calPlayoffProfit_v2 {
   }
 
   // 計算每隊獲利
-  private static int[] calProfit(Map<Integer, Team> teamMap, Map<Integer, Team> opponentTeamMap, String teamName, String league) {
+  private static void calProfit(Map<Integer, Team> teamMap, Map<Integer, Team> opponentTeamMap, String teamName, String league) {
     int ticketPrice = 450;
     int worldTicket = 800;
     float homeShare = 0.85F;
@@ -300,26 +300,8 @@ public class calPlayoffProfit_v2 {
     int worst_LDS_awayGames = 3 - worst_LDS_homeGames;
     int best_wild_Games = 3;
     int worst_wild_Games = 2;
-    int P1_best_earning = 0;
-    int P1_worst_earning = 0;
-    int P2_best_earning = 0;
-    int P2_worst_earning = 0;
-    int P3_best_earning = 0;
-    int P3_worst_earning = 0;
-    int P4_best_earning = 0;
-    int P4_worst_earning = 0;
-    int P5_best_earning = 0;
-    int P5_worst_earning = 0;
-    int P6_best_earning = 0;
-    int P6_worst_earning = 0;
     int best_earning = 0;
     int worst_earning = 0;
-    Team team1 = null;
-    Team team2;
-    Team team3;
-    Team team4;
-    Team team5;
-    Team team6;
     int[] profitArr = new int[2];
 
     for (int key : teamMap.keySet()) {
@@ -340,14 +322,14 @@ public class calPlayoffProfit_v2 {
         int total_WS_earning = calculateWorldSeriesEarnings(team, WS_opponent, worldTicket, homeShare, awayShare, best_LCS_World_homeGames, best_LCS_World_awayGames);
 
         // Total Best Earning
-        P1_best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
+        best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
         // Total Worst Earning (LDS)
-        P1_worst_earning = total_worst_LDS_earning;
+        worst_earning = total_worst_LDS_earning;
 
-        profitArr[0] = P1_best_earning;
-        profitArr[1] = P1_worst_earning;
-        return profitArr;
+        profitArr[0] = best_earning;
+        profitArr[1] = worst_earning;
+//        return profitArr;
 
       } else if (key == 2) {
         Team team = teamMap.get(key);
@@ -366,14 +348,14 @@ public class calPlayoffProfit_v2 {
         int total_WS_earning = calculateWorldSeriesEarnings(team, WS_opponent, worldTicket, homeShare, awayShare, best_LCS_World_homeGames, best_LCS_World_awayGames);
 
         // Total Best Earning
-        P2_best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
+        best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
         // Total Worst Earning (LDS)
-        P2_worst_earning = total_worst_LDS_earning;
+        worst_earning = total_worst_LDS_earning;
 
-        profitArr[0] = P2_best_earning;
-        profitArr[1] = P2_worst_earning;
-        return profitArr;
+        profitArr[0] = best_earning;
+        profitArr[1] = worst_earning;
+//        return profitArr;
 
       } else if (key == 3) {
         Team team = teamMap.get(key);
@@ -406,7 +388,7 @@ public class calPlayoffProfit_v2 {
 
         profitArr[0] = best_earning;
         profitArr[1] = worst_earning;
-        return profitArr;
+//        return profitArr;
 
       } else if (key == 4) {
         Team team = teamMap.get(key);
@@ -432,10 +414,10 @@ public class calPlayoffProfit_v2 {
         int total_WS_earning = calculateWorldSeriesEarnings(team, WS_opponent, worldTicket, homeShare, awayShare, best_LCS_World_homeGames, best_LCS_World_awayGames);
 
         // Total Best Earning
-        P4_best_earning = total_wild_earning + total_LDS_away_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
+        best_earning = total_wild_earning + total_LDS_away_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
 
         // Total Worst Earning (WILD 2戰)
-        P4_worst_earning = total_worst_wild_earning;
+        worst_earning = total_worst_wild_earning;
 
       } else if (key == 5) {
         Team team = teamMap.get(key);
@@ -461,10 +443,10 @@ public class calPlayoffProfit_v2 {
         int total_WS_earning = calculateWorldSeriesEarnings(team, WS_opponent, worldTicket, homeShare, awayShare, best_LCS_World_homeGames, best_LCS_World_awayGames);
 
         // Total Best Earning
-        P5_best_earning = total_wild_earning + total_LDS_away_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
+        best_earning = total_wild_earning + total_LDS_away_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
 
         // Total Worst Earning (WILD 2戰)
-        P5_worst_earning = total_worst_wild_earning;
+        worst_earning = total_worst_wild_earning;
 
       } else if (key == 6) {
         Team team = teamMap.get(key);
@@ -491,16 +473,16 @@ public class calPlayoffProfit_v2 {
         int total_WS_away_earning = (int) (calculateSeats(WS_opponent) * calculateRate(WS_opponent.getWorldSeriesSOrate()) * worldTicket * awayShare * best_LCS_World_homeGames);
 
         // Total Best Earning
-        P6_best_earning = total_wild_earning + total_LDS_away_earning + total_LDS_earning + total_LCS_earning + total_WS_earning + total_WS_away_earning;
+        best_earning = total_wild_earning + total_LDS_away_earning + total_LDS_earning + total_LCS_earning + total_WS_earning + total_WS_away_earning;
 
         // Total Worst Earning (WILD 2戰)
-        P6_worst_earning = total_worst_wild_earning;
+        worst_earning = total_worst_wild_earning;
       }
     }
 
-//    System.out.println(team1.getTeamName() + " 預估最佳獲利: " + String.format("%,d", P1_best_earning) + " USD");
-//    System.out.println(team1.getTeamName() + " 預估最差獲利: " + String.format("%,d", P1_worst_earning) + " USD");
-    return null;
+    System.out.println(teamName + " 預估最佳獲利: " + String.format("%,d", best_earning) + " USD");
+    System.out.println(teamName + " 預估最差獲利: " + String.format("%,d", worst_earning) + " USD");
+//    return null;
   } // end of calPlayoffProfit
 
 
