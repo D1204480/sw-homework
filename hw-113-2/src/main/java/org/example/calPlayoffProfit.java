@@ -200,6 +200,60 @@ public class calPlayoffProfit {
         System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
       }
 
+      for (Map.Entry<String, int[]> entry : ALp2Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : ALp3Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : ALp4Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : ALp5Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : ALp6Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+      for (Map.Entry<String, int[]> entry : NLp1Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : NLp2Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : NLp3Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+      for (Map.Entry<String, int[]> entry : NLp4Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : NLp5Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+      for (Map.Entry<String, int[]> entry : NLp6Profit.entrySet()) {
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+      }
+
+
 
 
     } catch (IOException e) {
@@ -246,351 +300,369 @@ public class calPlayoffProfit {
        B.LCS: 4主+3客(P2 or P3 or P6)
        C.WS: (名次相同, 則以字母排序高低種子) 4主+3客(ALP1 or ALP2 or ALP3 or ALP4 or ALP5 or ALP6)
     */
-    for (int key : teamMap.keySet()) {
-      if (key == 1) {
-        Team team = teamMap.get(key); // 取出key為1的該Map資料
+    // 先比對 teamMap 中是否有 teamName 相同的隊伍
+    for (Map.Entry<Integer, Team> entry : teamMap.entrySet()) {
+      Team team = entry.getValue();
+      if (team.getTeamName().equals(teamName)) {
+        int position = team.getPosition();
+        int key = entry.getKey();
 
-        int homeSeatsInt = Integer.parseInt(team.getCourtSeats().replace("k", "")) * 1000;
-        float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-        float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+        // 根據 key 的值進行不同的處理
+        if (key == 1) {
+//            Team team = teamMap.get(key); // 取出key為1的該Map資料
 
-        // A.LDS
-        int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_highSeed);
+          int homeSeatsInt = Integer.parseInt(team.getCourtSeats().replace("k", "")) * 1000;
+          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
+          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
 
-        Team LDS_opponent = findOpponent("LDS", 1, teamMap, opponentTeamMap, league);
-        assert LDS_opponent != null : "LDS_opponent為null";
-        int LDS_awaySeats = Integer.parseInt(LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_lowSeed);
+          // A.LDS
+          int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_highSeed);
 
-        int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
+          Team LDS_opponent = findOpponent("LDS", 1, teamMap, opponentTeamMap, league);
+          assert LDS_opponent != null : "LDS_opponent為null";
+          int LDS_awaySeats = Integer.parseInt(LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_lowSeed);
 
-        // B.LCS
-        int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
+          int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
 
-        Team LCS_opponent = findOpponent("LCS", 1, teamMap, opponentTeamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
+          // B.LCS
+          int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
 
-        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
+          Team LCS_opponent = findOpponent("LCS", 1, teamMap, opponentTeamMap, league);
+          int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
 
-        // C.world series
-        int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
+          int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
 
-        Team ws_opponent = findOpponent("WS", 1, teamMap, opponentTeamMap, league);
-        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
-        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
-        int total_WS_earning = ws_homeProfit + ws_awayProfit;
+          // C.world series
+          int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
 
-        best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
+          Team ws_opponent = findOpponent("WS", 1, teamMap, opponentTeamMap, league);
+          int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
+          int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        // P1最差獲利: LDS (2主+1客)
-        // A.LDS
-        int worst_LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_LDS_highSeed);
+          best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
-        Team worst_LDS_opponent = findOpponent("LDS", 1, teamMap, opponentTeamMap, league);
-        int worst_LDS_awaySeats = Integer.parseInt(worst_LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_lowSeed);
+          // P1最差獲利: LDS (2主+1客)
+          // A.LDS
+          int worst_LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_LDS_highSeed);
 
-        worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
-        // System.out.println(team.getTeamName() + " 最佳: " + best_earning);
-        // System.out.println(team.getTeamName() + " 最差: " + worst_earning);
-        bestWortProfitArray[0] = best_earning;
-        bestWortProfitArray[1] = worst_earning;
-        teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
-        return teamProfitMap;
+          Team worst_LDS_opponent = findOpponent("LDS", 1, teamMap, opponentTeamMap, league);
+          int worst_LDS_awaySeats = Integer.parseInt(worst_LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_lowSeed);
+
+          worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
+          // System.out.println(team.getTeamName() + " 最佳: " + best_earning);
+          // System.out.println(team.getTeamName() + " 最差: " + worst_earning);
+          bestWortProfitArray[0] = best_earning;
+          bestWortProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          return teamProfitMap;
 
 
-      } else if (key == 2) {
-        Team team = teamMap.get(key); // 取出key為2的該Map資料
+        } else if (key == 2) {
+//            Team team = teamMap.get(key); // 取出key為2的該Map資料
 
-        int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
-        float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-        float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+//          int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+          int homeSeatsInt = calculateSeats(team);
+//          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
+          float playoffSOrateFloat = calculateRate(team.getPlayoffsSOrate());
+//          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+          float worldSeriesOrateFloat = calculateRate(team.getWorldSeriesSOrate());
+          // A.LDS
+          int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_highSeed);
 
-        // A.LDS
-        int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_highSeed);
+          Team LDS_opponent = findOpponent("LDS", 2, teamMap, opponentTeamMap, league);
+          int LDS_awaySeats = Integer.parseInt(LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_lowSeed);
 
-        Team LDS_opponent = findOpponent("LDS", 2, teamMap, opponentTeamMap, league);
-        int LDS_awaySeats = Integer.parseInt(LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_lowSeed);
+          int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
 
-        int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
+          // B.LCS
+          int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
 
-        // B.LCS
-        int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
+          Team LCS_opponent = findOpponent("LCS", 2, teamMap, opponentTeamMap, league);
+          int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
 
-        Team LCS_opponent = findOpponent("LCS", 2, teamMap, opponentTeamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
+          int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
 
-        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
+          // C.world series
+          int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
 
-        // C.world series
-        int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
+          Team ws_opponent = findOpponent("WS", 2, teamMap, opponentTeamMap, league);
+          assert ws_opponent != null : "找不到ws_oppoment隊伍";
 
-        Team ws_opponent = findOpponent("WS", 2, teamMap, opponentTeamMap, league);
-        assert ws_opponent != null : "找不到ws_oppoment隊伍";
+          int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
+          int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
-        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
-        int total_WS_earning = ws_homeProfit + ws_awayProfit;
+          best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
 
-        best_earning = total_LDS_earning + total_LCS_earning + total_WS_earning;
+          // P1最差獲利: LDS (2主+1客)
+          // A.LDS
+          int worst_LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_LDS_highSeed);
 
-        // P1最差獲利: LDS (2主+1客)
-        // A.LDS
-        int worst_LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_LDS_highSeed);
+          Team worst_LDS_opponent = findOpponent("LDS", 2, teamMap, opponentTeamMap, league);
+          int worst_LDS_awaySeats = Integer.parseInt(worst_LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_lowSeed);
 
-        Team worst_LDS_opponent = findOpponent("LDS", 2, teamMap, opponentTeamMap, league);
-        int worst_LDS_awaySeats = Integer.parseInt(worst_LDS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float worst_awayPlayoffSOrateFloat = Float.parseFloat(worst_LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int worst_LDS_awayProfit = (int) (worst_LDS_awaySeats * worst_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_LDS_lowSeed);
-
-        worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
+          worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
 
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() + "最差: " + worst_earning);
 
-        bestWortProfitArray[0] = best_earning;
-        bestWortProfitArray[1] = worst_earning;
-        teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
-        return teamProfitMap;
+          bestWortProfitArray[0] = best_earning;
+          bestWortProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          return teamProfitMap;
 
-      } else if (key == 3) {
-        Team team = teamMap.get(key); // 取出key為3的該Map資料
+        } else if (key == 3) {
+//            Team team = teamMap.get(key); // 取出key為3的該Map資料
 
-        int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
-        float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-        float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
+          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
 
-        // wild-card Best (3戰, P3 vs P6)
-        int total_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * wild_highSeed);
+          // wild-card Best (3戰, P3 vs P6)
+          int total_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * wild_highSeed);
 
-        // P3最差獲利: wild-card Worst (2戰, P3 vs P6)
-        int total_worst_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_wild_highSeed);
+          // P3最差獲利: wild-card Worst (2戰, P3 vs P6)
+          int total_worst_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_wild_highSeed);
 
-        // A.LDS
-        int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
+          // A.LDS
+          int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
 
-        Team LDS_opponent = teamMap.get(2);
-        int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
-        float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
+          Team LDS_opponent = teamMap.get(2);
+//          int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
+          int LDS_awaySeats = calculateSeats(LDS_opponent);
+//          float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          float awayPlayoffSOrateFloat = calculateRate(LDS_opponent.getPlayoffsSOrate());
+          int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
 
-        int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
+          int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
 
-        // B.LCS
-        int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
+          // B.LCS
+          int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
 
-        Team LCS_opponent = findOpponent("LCS", 3, teamMap, opponentTeamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
+          Team LCS_opponent = findOpponent("LCS", 3, teamMap, opponentTeamMap, league);
+          int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
 
-        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
+          int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
 
-        // C.world series
-        int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
+          // C.world series
+          int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
 
-        Team ws_opponent = findOpponent("WS", 3, teamMap, opponentTeamMap, league);
-        assert ws_opponent != null : "找不到ws_oppoment隊伍";
+          Team ws_opponent = findOpponent("WS", 3, teamMap, opponentTeamMap, league);
+          assert ws_opponent != null : "找不到ws_oppoment隊伍";
 
-        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
-        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
-        int total_WS_earning = ws_homeProfit + ws_awayProfit;
+          int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
+          int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
+          best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
 
 //        System.out.println(team.getTeamName() + "最佳" + best_earning);
 //        System.out.println(team.getTeamName() +  "最差" + total_worst_wild_earning);
 
-        bestWortProfitArray[0] = best_earning;
-        bestWortProfitArray[1] = worst_earning;
-        teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
-        return teamProfitMap;
+          bestWortProfitArray[0] = best_earning;
+          bestWortProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          return teamProfitMap;
 
-      } else if (key == 4) {
-        Team team = teamMap.get(key); // 取出key為3的該Map資料
+        } else if (key == 4) {
+//            Team team = teamMap.get(key); // 取出key為3的該Map資料
 
-        int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
-        float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-        float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
+          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
 
-        // wild-card Best (3戰, P4 vs P5)
-        int total_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * wild_highSeed);
+          // wild-card Best (3戰, P4 vs P5)
+          int total_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * wild_highSeed);
 
-        // P4最差獲利: wild-card Worst (2戰, P4 vs P5)
-        int total_worst_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_wild_highSeed);
+          // P4最差獲利: wild-card Worst (2戰, P4 vs P5)
+          int total_worst_wild_earning = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * worst_wild_highSeed);
 
-        // A.LDS
-        int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
+          // A.LDS
+          int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
 
-        Team LDS_opponent = teamMap.get(1);
-        int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
-        float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
+          Team LDS_opponent = teamMap.get(1);
+          int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
+          float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
 
-        int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
+          int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
 
-        // B.LCS
-        int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
+          // B.LCS
+          int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
 
-        Team LCS_opponent = findOpponent("LCS", 4, teamMap, opponentTeamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
+          Team LCS_opponent = findOpponent("LCS", 4, teamMap, opponentTeamMap, league);
+          int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
 
-        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
+          int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
 
-        // C.world series
-        int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
+          // C.world series
+          int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
 
-        Team ws_opponent = findOpponent("WS", 4, teamMap, opponentTeamMap, league);
-        assert ws_opponent != null : "找不到ws_oppoment隊伍";
+          Team ws_opponent = findOpponent("WS", 4, teamMap, opponentTeamMap, league);
+          assert ws_opponent != null : "找不到ws_oppoment隊伍";
 
-        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
-        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
-        int total_WS_earning = ws_homeProfit + ws_awayProfit;
+          int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
+          int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
-
-//        System.out.println(team.getTeamName() + "最佳: " + best_earning);
-//        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
-
-        bestWortProfitArray[0] = best_earning;
-        bestWortProfitArray[1] = worst_earning;
-        teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
-        return teamProfitMap;
-
-      } else if (key == 5) {
-        Team team = teamMap.get(key); // 取出key為3的該Map資料
-        Team p4team = teamMap.get(4);
-
-        int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
-        float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-        float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
-
-        // wild-card Best (3戰, P5 vs P4)
-        int wild_awaySeats = (int) (Float.parseFloat(p4team.getCourtSeats().replace("k", "")) * 1000);
-        float wild_awayPlayoffSOrateFloat = Float.parseFloat(p4team.getPlayoffsSOrate().replace("%", "")) / 100;
-        int total_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * wild_highSeed);
-
-        // P5最差獲利: wild-card Worst (2戰, P5 vs P4)
-        int total_worst_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_wild_highSeed);
-
-        // A.LDS
-        int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
-
-        Team LDS_opponent = teamMap.get(1);
-        int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
-        float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
-
-        int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
-
-        // B.LCS
-        int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
-
-        Team LCS_opponent = findOpponent("LCS", 5, teamMap, opponentTeamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
-
-        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
-
-        // C.world series
-        int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
-
-        Team ws_opponent = findOpponent("WS", 5, teamMap, opponentTeamMap, league);
-        assert ws_opponent != null : "找不到ws_oppoment隊伍";
-
-        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
-        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
-        int total_WS_earning = ws_homeProfit + ws_awayProfit;
-
-        best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
+          best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
 
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
 
-        bestWortProfitArray[0] = best_earning;
-        bestWortProfitArray[1] = worst_earning;
-        teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
-        return teamProfitMap;
+          bestWortProfitArray[0] = best_earning;
+          bestWortProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          return teamProfitMap;
 
-      } else if (key == 6) {
-        Team team = teamMap.get(key); // 取出key為3的該Map資料
-        Team p3team = teamMap.get(3);
+        } else if (key == 5) {
+//            Team team = teamMap.get(key); // 取出key為3的該Map資料
+          Team p4team = teamMap.get(4);
 
-        int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
-        float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
-        float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+//          int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+          int homeSeatsInt = calculateSeats(team);
+//          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
+          float playoffSOrateFloat = calculateRate(team.getPlayoffsSOrate());
+//          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+          float worldSeriesOrateFloat = calculateRate(team.getWorldSeriesSOrate());
 
-        // wild-card Best (3戰, P5 vs P4)
-        int wild_awaySeats = (int) (Float.parseFloat(p3team.getCourtSeats().replace("k", "")) * 1000);
-        float wild_awayPlayoffSOrateFloat = Float.parseFloat(p3team.getPlayoffsSOrate().replace("%", "")) / 100;
-        int total_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * wild_highSeed);
+          // wild-card Best (3戰, P5 vs P4)
+          int wild_awaySeats = (int) (Float.parseFloat(p4team.getCourtSeats().replace("k", "")) * 1000);
+          float wild_awayPlayoffSOrateFloat = Float.parseFloat(p4team.getPlayoffsSOrate().replace("%", "")) / 100;
+          int total_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * wild_highSeed);
 
-        // P5最差獲利: wild-card Worst (2戰, P5 vs P4)
-        int total_worst_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_wild_highSeed);
+          // P5最差獲利: wild-card Worst (2戰, P5 vs P4)
+          int total_worst_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_wild_highSeed);
 
-        // A.LDS
-        int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
+          // A.LDS
+          int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
 
-        Team LDS_opponent = teamMap.get(1);
-        int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
-        float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
+          Team LDS_opponent = teamMap.get(1);
+          int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
+          float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
 
-        int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
+          int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
 
-        // B.LCS
-        int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
+          // B.LCS
+          int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
 
-        Team LCS_opponent = findOpponent("LCS", 5, teamMap, opponentTeamMap, league);
-        int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
-        int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
+          Team LCS_opponent = findOpponent("LCS", 5, teamMap, opponentTeamMap, league);
+          int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
 
-        int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
+          int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
 
-        // C.world series
-        int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
+          // C.world series
+          int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
 
-        Team ws_opponent = findOpponent("WS", 5, teamMap, opponentTeamMap, league);
-        assert ws_opponent != null : "找不到ws_oppoment隊伍";
+          Team ws_opponent = findOpponent("WS", 5, teamMap, opponentTeamMap, league);
+          assert ws_opponent != null : "找不到ws_oppoment隊伍";
 
-        int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
-        float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
-        int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
-        int total_WS_earning = ws_homeProfit + ws_awayProfit;
+          int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
+          int total_WS_earning = ws_homeProfit + ws_awayProfit;
 
-        best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
+          best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
 
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
 
-        bestWortProfitArray[0] = best_earning;
-        bestWortProfitArray[1] = worst_earning;
-        teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
-        return teamProfitMap;
+          bestWortProfitArray[0] = best_earning;
+          bestWortProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          return teamProfitMap;
 
+        } else if (key == 6) {
+//            Team team = teamMap.get(key); // 取出key為3的該Map資料
+          Team p3team = teamMap.get(3);
+
+          int homeSeatsInt = (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+          float playoffSOrateFloat = Float.parseFloat(team.getPlayoffsSOrate().replace("%", "")) / 100;
+          float worldSeriesOrateFloat = Float.parseFloat(team.getWorldSeriesSOrate().replace("%", "")) / 100;
+
+          // wild-card Best (3戰, P5 vs P4)
+          int wild_awaySeats = (int) (Float.parseFloat(p3team.getCourtSeats().replace("k", "")) * 1000);
+          float wild_awayPlayoffSOrateFloat = Float.parseFloat(p3team.getPlayoffsSOrate().replace("%", "")) / 100;
+          int total_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * wild_highSeed);
+
+          // P5最差獲利: wild-card Worst (2戰, P5 vs P4)
+          int total_worst_wild_earning = (int) (wild_awaySeats * wild_awayPlayoffSOrateFloat * ticketPrice * awayShare * worst_wild_highSeed);
+
+          // A.LDS
+          int LDS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LDS_lowSeed);
+
+          Team LDS_opponent = teamMap.get(1);
+          int LDS_awaySeats = (int) (Float.parseFloat(LDS_opponent.getCourtSeats().replace("k", "")) * 1000);
+          float awayPlayoffSOrateFloat = Float.parseFloat(LDS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LDS_awayProfit = (int) (LDS_awaySeats * awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LDS_highSeed);
+
+          int total_LDS_earning = LDS_homeProfit + LDS_awayProfit;
+
+          // B.LCS
+          int LCS_homeProfit = (int) (homeSeatsInt * playoffSOrateFloat * ticketPrice * homeShare * best_LCS_World_highSeed);
+
+          Team LCS_opponent = findOpponent("LCS", 5, teamMap, opponentTeamMap, league);
+          int LCS_awaySeatsInt = Integer.parseInt(LCS_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float LCS_awayPlayoffSOrateFloat = Float.parseFloat(LCS_opponent.getPlayoffsSOrate().replace("%", "")) / 100;
+          int LCS_awayProfit = (int) (LCS_awaySeatsInt * LCS_awayPlayoffSOrateFloat * ticketPrice * awayShare * best_LCS_World_lowSeed);
+
+          int total_LCS_earning = LCS_homeProfit + LCS_awayProfit;
+
+          // C.world series
+          int ws_homeProfit = (int) (homeSeatsInt * worldSeriesOrateFloat * worldTicket * homeShare * best_LCS_World_highSeed);
+
+          Team ws_opponent = findOpponent("WS", 5, teamMap, opponentTeamMap, league);
+          assert ws_opponent != null : "找不到ws_oppoment隊伍";
+
+          int ws_awaySeatsInt = Integer.parseInt(ws_opponent.getCourtSeats().replace("k", "")) * 1000;
+          float ws_awayWorldSOrateFloat = Float.parseFloat(ws_opponent.getWorldSeriesSOrate().replace("%", "")) / 100;
+          int ws_awayProfit = (int) (ws_awaySeatsInt * ws_awayWorldSOrateFloat * worldTicket * awayShare * best_LCS_World_lowSeed);  // NL最賺球場: Dodger
+          int total_WS_earning = ws_homeProfit + ws_awayProfit;
+
+          best_earning = total_wild_earning + total_LDS_earning + total_LCS_earning + total_WS_earning;
+
+//        System.out.println(team.getTeamName() + "最佳: " + best_earning);
+//        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
+
+          bestWortProfitArray[0] = best_earning;
+          bestWortProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          return teamProfitMap;
+
+        }
       }
     }
 //    System.out.println(teamName + " 預估最佳獲利: " + String.format("%,d", best_earning) + " USD");
 //    System.out.println(teamName + " 預估最差獲利: " + String.format("%,d", worst_earning) + " USD");
 
+
+
     return null;
+
   } // end of calProfit
 
 
@@ -740,6 +812,27 @@ public class calPlayoffProfit {
     } else {
       return 0;  // Returning 0 if any value is missing
     }
+  }
+
+  // 計算座位數, 轉換格式為32k -> 32000
+  private static int calculateSeats(Team team) {
+    String courtSeats = team.getCourtSeats();
+    if (courtSeats == null || courtSeats.isEmpty()) {  // 如果沒有資料
+      System.err.println("Court seats data is missing for team: " + team.getTeamName());
+//      logger.log(Level.WARNING,"Court seats data is missing for team: \" + team.getTeamName()");
+      return 0;
+    }
+    return (int) (Float.parseFloat(team.getCourtSeats().replace("k", "")) * 1000);
+  }
+
+
+  // 百分比轉為數字: 100% -> 1
+  private static float calculateRate(String rate) {
+    if (rate == null || rate.isEmpty()) {  // 如果沒有值
+      System.err.println("Rate data is missing");
+      return 0.0F; // Default to 0 if rate is null or empty
+    }
+    return Float.parseFloat(rate.replace("%", "")) / 100;
   }
 
 
