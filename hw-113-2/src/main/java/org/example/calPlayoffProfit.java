@@ -196,61 +196,61 @@ public class calPlayoffProfit {
       Map<String, int[]> NLp6Profit = calProfit(_NLteamDataMap, _ALteamDataMap, "Atlanta Braves", "NL");
 
       for (Map.Entry<String, int[]> entry : ALp1Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : ALp2Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : ALp3Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : ALp4Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : ALp5Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : ALp6Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
       for (Map.Entry<String, int[]> entry : NLp1Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : NLp2Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : NLp3Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
       for (Map.Entry<String, int[]> entry : NLp4Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : NLp5Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
       for (Map.Entry<String, int[]> entry : NLp6Profit.entrySet()) {
-        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + "USD");
-        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + "USD");
+        System.out.println(entry.getKey() + " 最佳獲利: " + String.format("%,d", entry.getValue()[0]) + " USD");
+        System.out.println(entry.getKey() + " 最差獲利: " + String.format("%,d", entry.getValue()[1]) + " USD");
       }
 
 
@@ -279,7 +279,7 @@ public class calPlayoffProfit {
    */
   private static Map<String, int[]> calProfit(Map<Integer, Team> teamMap, Map<Integer, Team> opponentTeamMap, String teamName, String league) {
     Map<String, int[]> teamProfitMap = new HashMap<>(); // 存放隊名,最佳獲利, 最差獲利
-    int[] bestWortProfitArray = new int[2];
+    int[] bestWorstProfitArray = new int[2];
     int ticketPrice = 450;
     int worldTicket = 800;
     float homeShare = 0.85F;
@@ -359,9 +359,9 @@ public class calPlayoffProfit {
           worst_earning = worst_LDS_homeProfit + worst_LDS_awayProfit;
           // System.out.println(team.getTeamName() + " 最佳: " + best_earning);
           // System.out.println(team.getTeamName() + " 最差: " + worst_earning);
-          bestWortProfitArray[0] = best_earning;
-          bestWortProfitArray[1] = worst_earning;
-          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          bestWorstProfitArray[0] = best_earning;
+          bestWorstProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWorstProfitArray);
           return teamProfitMap;
 
 
@@ -421,9 +421,9 @@ public class calPlayoffProfit {
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() + "最差: " + worst_earning);
 
-          bestWortProfitArray[0] = best_earning;
-          bestWortProfitArray[1] = worst_earning;
-          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          bestWorstProfitArray[0] = best_earning;
+          bestWorstProfitArray[1] = worst_earning;
+          teamProfitMap.put(team.getTeamName(), bestWorstProfitArray);
           return teamProfitMap;
 
         } else if (key == 3) {
@@ -477,9 +477,9 @@ public class calPlayoffProfit {
 //        System.out.println(team.getTeamName() + "最佳" + best_earning);
 //        System.out.println(team.getTeamName() +  "最差" + total_worst_wild_earning);
 
-          bestWortProfitArray[0] = best_earning;
-          bestWortProfitArray[1] = worst_earning;
-          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          bestWorstProfitArray[0] = best_earning;
+          bestWorstProfitArray[1] = total_worst_wild_earning;
+          teamProfitMap.put(team.getTeamName(), bestWorstProfitArray);
           return teamProfitMap;
 
         } else if (key == 4) {
@@ -531,9 +531,9 @@ public class calPlayoffProfit {
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
 
-          bestWortProfitArray[0] = best_earning;
-          bestWortProfitArray[1] = worst_earning;
-          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          bestWorstProfitArray[0] = best_earning;
+          bestWorstProfitArray[1] = total_worst_wild_earning;
+          teamProfitMap.put(team.getTeamName(), bestWorstProfitArray);
           return teamProfitMap;
 
         } else if (key == 5) {
@@ -591,9 +591,9 @@ public class calPlayoffProfit {
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
 
-          bestWortProfitArray[0] = best_earning;
-          bestWortProfitArray[1] = worst_earning;
-          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          bestWorstProfitArray[0] = best_earning;
+          bestWorstProfitArray[1] = total_worst_wild_earning;
+          teamProfitMap.put(team.getTeamName(), bestWorstProfitArray);
           return teamProfitMap;
 
         } else if (key == 6) {
@@ -648,9 +648,9 @@ public class calPlayoffProfit {
 //        System.out.println(team.getTeamName() + "最佳: " + best_earning);
 //        System.out.println(team.getTeamName() +  "最差: " + total_worst_wild_earning);
 
-          bestWortProfitArray[0] = best_earning;
-          bestWortProfitArray[1] = worst_earning;
-          teamProfitMap.put(team.getTeamName(), bestWortProfitArray);
+          bestWorstProfitArray[0] = best_earning;
+          bestWorstProfitArray[1] = total_worst_wild_earning;
+          teamProfitMap.put(team.getTeamName(), bestWorstProfitArray);
           return teamProfitMap;
 
         }
