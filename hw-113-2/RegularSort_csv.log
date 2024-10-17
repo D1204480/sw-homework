@@ -70,3 +70,7 @@ INFO: 程式正確執行結束
 INFO: 嘗試開啟檔案: data/MLB_2024_regular.csv
 10月 12, 2024 8:56:09 下午 org.example.RegularSort_csv main
 INFO: 程式正確執行結束
+10月 15, 2024 11:05:18 下午 org.example.RegularSort_csv main
+INFO: 嘗試開啟檔案: data/MLB_2024_regular.csv
+10月 15, 2024 11:05:18 下午 org.example.RegularSort_csv main
+INFO: 程式正確執行結束

@@ -1,9 +1,14 @@
-package org.example;
+package fixed;
+
+import org.example.Team;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.FileHandler;
@@ -11,16 +16,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class calPlayoffProfit {
+public class CalPlayoffProfit {
   // 一般都是用 class name 來作為 logger 的名字
-  private static final Logger logger = Logger.getLogger(calPlayoffProfit.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(CalPlayoffProfit.class.getName());
 
   public static void main(String[] args) {
     try {
       // 設定 FileHandler，將日誌寫入檔案 "calProfit.log"
       FileHandler fileHandler = new FileHandler("calProfit.log", true); // true 表示追加到文件中
       fileHandler.setFormatter(new SimpleFormatter()); // 設定格式為簡單格式
-      logger.addHandler(fileHandler);
+      LOGGER.addHandler(fileHandler);
 
       // 讀取的檔案路徑
       String courtFileName = "court_info.txt";  // 各隊球場資訊
@@ -35,7 +40,7 @@ public class calPlayoffProfit {
 
 
       // read and store data to Map from wildCard.csv
-      try (BufferedReader br = new BufferedReader(new FileReader(wildCardTeamPath))) {
+      try (BufferedReader br = Files.newBufferedReader(Paths.get(wildCardTeamPath), StandardCharsets.UTF_8)) {
         String line;
         br.readLine();  // 跳過表頭
         while ((line = br.readLine()) != null) {
@@ -74,17 +79,17 @@ public class calPlayoffProfit {
 
         } // end of while
       } catch (FileNotFoundException e) {
-        logger.log(Level.SEVERE, "發生找不到檔案: " + e.getMessage());
+        LOGGER.log(Level.SEVERE, "發生找不到檔案: " + e.getMessage());
         throw new RuntimeException(e);
 
       } catch (IOException e) {
-        logger.log(Level.SEVERE, "發生讀檔IO找不到檔案: " + e.getMessage());
+        LOGGER.log(Level.SEVERE, "發生讀檔IO找不到檔案: " + e.getMessage());
         throw new RuntimeException(e);
       } // end of try(read wildCard.csv)
 
 
       // read and update data to Map from court.csv
-      try (BufferedReader br = new BufferedReader(new FileReader(courtFilePath))) {
+      try (BufferedReader br = Files.newBufferedReader(Paths.get(courtFilePath), StandardCharsets.UTF_8)) {
         String line;
         br.readLine(); // 跳過表頭
         while ((line = br.readLine()) != null) {
@@ -148,12 +153,12 @@ public class calPlayoffProfit {
         } // end of while
 
       } catch (FileNotFoundException e) {
-        logger.log(Level.SEVERE, "發生找不到檔案: " + e.getMessage());
-        throw new RuntimeException(e);
+        LOGGER.log(Level.SEVERE, "發生找不到檔案: " + e.getMessage());
+        throw new FileNotFoundException(e.getMessage());
 
       } catch (IOException e) {
-        logger.log(Level.SEVERE, "發生讀檔IO找不到檔案: " + e.getMessage());
-        throw new RuntimeException(e);
+        LOGGER.log(Level.SEVERE, "發生讀檔IO找不到檔案: " + e.getMessage());
+        throw new IOException(e.getMessage());
       } // end of try(read court.txt)
 
 
@@ -257,7 +262,7 @@ public class calPlayoffProfit {
 
 
     } catch (IOException e) {
-      logger.log(Level.SEVERE, "發生讀寫log錯誤: " + e.getMessage());
+      LOGGER.log(Level.SEVERE, "發生讀寫log錯誤: " + e.getMessage());
       throw new RuntimeException(e);
     } // end of try(logger)
   } // end of main

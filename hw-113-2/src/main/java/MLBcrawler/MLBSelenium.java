@@ -1,4 +1,4 @@
-package MLBcrawler.src.main.java.org.example;
+package MLBcrawler;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
-public class MLB_selenium {
+public class MLBSelenium {
     public static void main(String[] args) {
 
         WebDriver driver = new ChromeDriver();
@@ -23,8 +23,8 @@ public class MLB_selenium {
         }
 
         // 抓取勝場標題
-        WebElement w_Title = driver.findElement(By.cssSelector("th[data-col='1']"));
-        System.out.println(w_Title.getText());  // 這會打印出 "W"
+        WebElement winTitle = driver.findElement(By.cssSelector("th[data-col='1']"));
+        System.out.println(winTitle.getText());  // 這會打印出 "W"
         // 抓取所有球隊的勝場數
         List<WebElement> winElements = driver.findElements(By.cssSelector("td[data-col='1'] span[aria-hidden='true']"));
         for (WebElement win : winElements) {
@@ -32,8 +32,8 @@ public class MLB_selenium {
         }
 
         // 抓取敗場標題
-        WebElement l_Title = driver.findElement(By.cssSelector("th[data-col='2']"));
-        System.out.println(l_Title.getText());  // 這會打印出 "L"
+        WebElement loseTitle = driver.findElement(By.cssSelector("th[data-col='2']"));
+        System.out.println(loseTitle.getText());  // 這會打印出 "L"
         // 抓取所有球隊的敗場數
         List<WebElement> lostElements = driver.findElements(By.cssSelector("td[data-col='2'] span[aria-hidden='true']"));
         for (WebElement lost : lostElements) {

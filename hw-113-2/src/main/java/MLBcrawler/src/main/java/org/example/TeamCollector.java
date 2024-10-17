@@ -10,6 +10,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +33,8 @@ public class TeamCollector {
     String filePath = "D:\\fcu_post\\1131軟體品質測試\\homework\\sw-homework\\hw-113-2\\data\\" + fileName;
 
     // 兩個 BufferedWriter，用來寫入不同的路徑 (指定路徑、本資料夾)
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
-    BufferedWriter localBw = new BufferedWriter(new FileWriter(fileName))) {
+    try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(filePath), StandardCharsets.UTF_8);
+         BufferedWriter localBw = Files.newBufferedWriter(Paths.get(fileName), StandardCharsets.UTF_8)) {
 
       // 製作csv檔printer
       CSVPrinter printer = new CSVPrinter(bw, CSVFormat.DEFAULT.withHeader("Team", "W", "L", "PCT"));
