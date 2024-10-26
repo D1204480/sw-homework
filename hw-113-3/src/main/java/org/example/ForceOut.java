@@ -2,7 +2,7 @@ package org.example;
 
 public class ForceOut {
 
-  public StringBuilder calForceOut(int oneB, int twoB, int threeB) {
+  public String calForceOut(int oneB, int twoB, int threeB) {
     /* 封殺狀況:
     x       -> 1B
     1B      -> 1B, 2B
@@ -14,7 +14,7 @@ public class ForceOut {
     int[] baseArray = new int[]{1, oneB, twoB, threeB};
 
     // 儲存封殺的壘包位置
-    StringBuilder forceOutBases = new StringBuilder("封殺壘包: ");
+    StringBuilder forceOutBases = new StringBuilder();
 
     if (baseArray[1] == 1) {
       // 如果一壘有人，則一二壘會有封殺
@@ -24,7 +24,7 @@ public class ForceOut {
       if (baseArray[1] == 1) {  // 一壘也有人
         forceOutBases.append("1B, 2B, 3B");
       } else {
-        forceOutBases.append("1B, ");
+        forceOutBases.append("1B");
       }
 
     } else if (baseArray[3] == 1) {  // 三壘有人
@@ -32,26 +32,26 @@ public class ForceOut {
         if (baseArray[1] == 1) {  // 一壘有人
           forceOutBases.append("1B, 2B, 3B");
         } else {
-          forceOutBases.append("1B, ");
+          forceOutBases.append("1B");
         }
       } else {
         if (baseArray[1] == 1) {   // 二壘無人, 一壘有人
           forceOutBases.append("1B, 2B");
         } else {
           if (baseArray[1] == 0) {
-            forceOutBases.append("1B, ");
+            forceOutBases.append("1B");
           }
         }
       }
 
     } else {  // 壘包上無人
-      forceOutBases.append("1B, ");
+      forceOutBases.append("1B");
     }
 
     // 輸出封殺壘包結果
     System.out.println(forceOutBases.toString());
 
-    return forceOutBases;
+    return forceOutBases.toString();
   }
 
   public static void main(String[] args) {

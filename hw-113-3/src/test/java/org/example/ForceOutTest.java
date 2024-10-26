@@ -14,10 +14,10 @@ class ForceOutTest {
      */
     ForceOut forceOut = new ForceOut();
     assertAll("test force out on calForceOut",
-        () -> assertEquals(, forceOut.calForceOut(0,0,0)),
-        () -> assertEquals(1,2, forceOut.calForceOut(1,0,0)),
-        () -> assertEquals(1,2, forceOut.calForceOut(1,0,0)),
-        () -> assertEquals(1, forceOut.calForceOut(0,0,1))
+        () -> assertEquals("1B", forceOut.calForceOut(0,0,0)),
+        () -> assertEquals("1B, 2B", forceOut.calForceOut(1,0,0)),
+        () -> assertEquals("1B, 2B", forceOut.calForceOut(1,0,3)),
+        () -> assertEquals("1B", forceOut.calForceOut(0,0,1))
         );
 
   }
