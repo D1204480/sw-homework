@@ -25,7 +25,7 @@ public class RegularSort_csv {
       logger.addHandler(fileHandler);
 //      logger.info("這是一條 INFO 等級的日誌訊息");
 
-      String fileName = "MLB_2024_regular.csv";  // 要打開的檔案名稱
+      String fileName = "MLB_2024_regular.txt";  // 要打開的檔案名稱
       String filePath = "data/" + fileName;
 
       List<Team> _ALlist = new ArrayList<>();  // 建立陣列存放AL球隊
@@ -43,15 +43,15 @@ public class RegularSort_csv {
       try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         logger.info("嘗試開啟檔案: " + filePath);
 
-        int count = 0;
+//        int count = 0;
         String line = "";
         while ((line = br.readLine()) != null) {  // 讀每一row直到沒資料
           assert line != null : "讀不到資料";
 
-          count++;
-          if (count == 1) {  // 用來跳過第一行的表頭
-            continue;
-          }
+//          count++;
+//          if (count == 1) {  // 用來跳過第一行的表頭
+//            continue;
+//          }
 
           line = line.replace("\"", "");  // 去除csv檔, 每行資料前後的""
           String[] data = line.split(",");
