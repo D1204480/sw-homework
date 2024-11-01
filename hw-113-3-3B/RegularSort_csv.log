@@ -22,3 +22,7 @@ INFO: 嘗試開啟檔案: data/MLB_2024_regular.txt
 INFO: 嘗試開啟檔案: data/MLB_2024_regular.txt
 11月 01, 2024 4:46:23 下午 org.example.RegularSort_csv main
 INFO: 程式正確執行結束
+11月 01, 2024 4:48:11 下午 org.example.RegularSort_csv main
+INFO: 嘗試開啟檔案: data/MLB_2024_regular.txt
+11月 01, 2024 4:48:11 下午 org.example.RegularSort_csv main
+INFO: 程式正確執行結束
