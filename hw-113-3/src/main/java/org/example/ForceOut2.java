@@ -14,26 +14,30 @@ public class ForceOut2 {
     3B      -> 1B
      */
 
-    int[] baseArray = new int[]{1, base1, base2, base3};  // 存放壘包人數
-    Set<String> forceOutSet = new HashSet<>();  // 存放壘包封殺狀況
+    int[] baseArray = new int[]{1, base1, base2, base3};  // 存放每個壘包上壘人數
+    Set<String> forceOutSet = new HashSet<>();  // 可以封殺的壘包
 
-    for (int i = 1; i < baseArray.length; i++) {  // 從1壘開始查看
+    for (int i = 1; i < baseArray.length; i++) {  // 從1壘開始依序查看
       if (baseArray[i - 1] == 1) {  // 前一個壘包
         if (baseArray[i] == 1) {  // 當下的壘包有人
-          forceOutSet.add(String.valueOf(i) + "B");
+          forceOutSet.add(i + "B");
 
           if ((i + 1) == 4) {
             forceOutSet.add("HB");  // 本壘
           } else {
-            forceOutSet.add(String.valueOf(i + 1) + "B");
+            forceOutSet.add((i + 1) + "B");
           }
 
         } else {   // 當下的壘包無人
-          forceOutSet.add(String.valueOf(i) + "B");
+          forceOutSet.add(i + "B");
         }
       }
     }
-    return forceOutSet.toString();
+
+    // 取出hashset的每個值
+    return String.join(", ", forceOutSet);
+//    return forceOutSet.toString();
+
   } // end of getForceOut
 
   public static void main(String[] args) {
