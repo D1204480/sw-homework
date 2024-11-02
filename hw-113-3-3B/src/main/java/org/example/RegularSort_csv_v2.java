@@ -28,9 +28,9 @@ public class RegularSort_csv_v2 {
         logger.info("Opening file: " + filePath);
 
         processFile(br, leagueTeams);  // 讀檔案, 並把球隊存到Map物件裡
-        sortTeamsInDivisions(leagueTeams);
-        prepareTop3AndLeagueLists(_ALtop3List, _ALlist, _NLtop3List, _NLlist, leagueTeams);
-        printSchedule(_ALtop3List, _ALlist, _NLtop3List, _NLlist);
+        sortTeamsInDivisions(leagueTeams);  // 陣列做勝、敗場排序
+        prepareTop3AndLeagueLists(_ALtop3List, _ALlist, _NLtop3List, _NLlist, leagueTeams);  // 分成前3名陣列、第2~15名陣列
+        printSchedule(_ALtop3List, _ALlist, _NLtop3List, _NLlist);  // 印出對戰表
 
         logger.info("Program completed successfully.");
       } catch (FileNotFoundException e) {
@@ -88,25 +88,27 @@ public class RegularSort_csv_v2 {
     }
   }
 
-  // 依勝場數排序
+  // 依勝、敗場數排序
   private static void sortTeamsInDivisions(Map<String, List<Team_v2>> leagueTeams) {
     leagueTeams.values().forEach(Collections::sort);
   }
 
+  // 分成:前3名的陣列、第2~15名的陣列
   private static void prepareTop3AndLeagueLists(List<Team_v2> _ALtop3List, List<Team_v2> _ALlist,
                                                 List<Team_v2> _NLtop3List, List<Team_v2> _NLlist,
                                                 Map<String, List<Team_v2>> leagueTeams) {
     leagueTeams.forEach((league, teams) -> {
       if (league.startsWith("AL")) {
-        _ALtop3List.add(teams.get(0));
-        _ALlist.addAll(teams.subList(1, teams.size()));
+        _ALtop3List.add(teams.get(0));  // 第1名球隊
+        _ALlist.addAll(teams.subList(1, teams.size())); // 第2~15名
       } else if (league.startsWith("NL")) {
-        _NLtop3List.add(teams.get(0));
-        _NLlist.addAll(teams.subList(1, teams.size()));
+        _NLtop3List.add(teams.get(0));   // 第1名
+        _NLlist.addAll(teams.subList(1, teams.size()));  // 第2~15名
       }
     });
   }
 
+  // 印出對戰表
   private static void printSchedule(List<Team_v2> _ALtop3List, List<Team_v2> _ALlist,
                                     List<Team_v2> _NLtop3List, List<Team_v2> _NLlist) {
     System.out.println("(AMERICAN LEAGUE)");
