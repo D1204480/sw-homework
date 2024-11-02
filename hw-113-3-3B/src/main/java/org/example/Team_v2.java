@@ -14,6 +14,10 @@ public class Team_v2 implements Comparable<Team_v2> {
   private int lose;
   private float pct;
 
+  // Check if the sum of wins and losses equals 162
+  public boolean isValidRecord() {
+    return (this.win + this.lose) > 160;
+  }
 
   @Override
   public int compareTo(Team_v2 other) {

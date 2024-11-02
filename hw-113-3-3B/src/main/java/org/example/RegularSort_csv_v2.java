@@ -83,8 +83,13 @@ public class RegularSort_csv_v2 {
     for (int i = 0; i < 5; i++) {
       String[] data = br.readLine().replace("\"", "").split(",");
       if (data.length < 4) continue;
+
       Team_v2 team = new Team_v2(league, data[0], Integer.parseInt(data[1]), Integer.parseInt(data[2]), Float.parseFloat(data[3]));
-      teamList.add(team);
+      if (team.isValidRecord()) {  // 驗證比賽總數量
+        teamList.add(team);
+      } else {
+        System.out.println("Invalid record for team: " + team.getTeamName());
+      }
     }
   }
 
