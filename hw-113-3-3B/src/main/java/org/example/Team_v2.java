@@ -17,6 +17,20 @@ public class Team_v2 implements Comparable<Team_v2> {
 
   @Override
   public int compareTo(Team_v2 other) {
-    return Integer.compare(other.win, this.win); // Sort by wins in descending order
+    // Compare by wins in descending order
+    int winComparison = Integer.compare(other.win, this.win);
+    if (winComparison != 0) {
+      return winComparison;
+    }
+
+    // If wins are the same, compare by losses in ascending order
+    int lossComparison = Integer.compare(this.lose, other.lose);
+    if (lossComparison != 0) {
+      return lossComparison;
+    }
+
+    // If both wins and losses are the same, compare by team name alphabetically
+    return this.teamName.compareTo(other.teamName);
   }
+
 }

@@ -17,19 +17,21 @@ public class RegularSort_csv_v2 {
     try {
       setupLogger();
       String filePath = "data/MLB_2024_regular.txt";
-      List<Team_v2> _ALtop3List = new ArrayList<>();
-      List<Team_v2> _ALlist = new ArrayList<>();
-      List<Team_v2> _NLtop3List = new ArrayList<>();
-      List<Team_v2> _NLlist = new ArrayList<>();
+      List<Team_v2> _ALtop3List = new ArrayList<>();  // AL, 1~3名
+      List<Team_v2> _ALlist = new ArrayList<>();  // AL,4~15名
+      List<Team_v2> _NLtop3List = new ArrayList<>();  // NL, 1~3名
+      List<Team_v2> _NLlist = new ArrayList<>();  // NL, 4~15名
 
-      Map<String, List<Team_v2>> leagueTeams = initializeLeagueTeams();
+      Map<String, List<Team_v2>> leagueTeams = initializeLeagueTeams();  // 建立Map物件並初始化
 
       try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         logger.info("Opening file: " + filePath);
-        processFile(br, leagueTeams);
+
+        processFile(br, leagueTeams);  // 讀檔案, 並把球隊存到Map物件裡
         sortTeamsInDivisions(leagueTeams);
         prepareTop3AndLeagueLists(_ALtop3List, _ALlist, _NLtop3List, _NLlist, leagueTeams);
         printSchedule(_ALtop3List, _ALlist, _NLtop3List, _NLlist);
+
         logger.info("Program completed successfully.");
       } catch (FileNotFoundException e) {
         logger.log(Level.SEVERE, "File not found: " + e.getMessage());
@@ -41,12 +43,14 @@ public class RegularSort_csv_v2 {
     }
   }
 
+  // 日誌
   private static void setupLogger() throws IOException {
     FileHandler fileHandler = new FileHandler("RegularSortCsv.log", true);
     fileHandler.setFormatter(new SimpleFormatter());
     logger.addHandler(fileHandler);
   }
 
+  // 建立Map物件, 並先把key值設定好
   private static Map<String, List<Team_v2>> initializeLeagueTeams() {
     return Map.of(
         "AL EAST", new ArrayList<>(),
@@ -58,20 +62,23 @@ public class RegularSort_csv_v2 {
     );
   }
 
+  // 讀檔案
   private static void processFile(BufferedReader br, Map<String, List<Team_v2>> leagueTeams) throws IOException {
     String line;
     while ((line = br.readLine()) != null) {
-      line = line.replace("\"", "");
-      String[] data = line.split(",");
+      line = line.replace("\"", ""); // 去除雙引號
+      String[] data = line.split(",");  // 以逗號切割
       if (data.length < 4) continue;
+
       String league = data[0];
-      if (leagueTeams.containsKey(league)) {
+      if (leagueTeams.containsKey(league)) {  // 比對Map物件的key值
         List<Team_v2> teamList = leagueTeams.get(league);
         processTeamData(br, teamList, league);
       }
     }
   }
 
+  // 把球堆分類到各自的 區域陣列 裡
   private static void processTeamData(BufferedReader br, List<Team_v2> teamList, String league) throws IOException {
     for (int i = 0; i < 5; i++) {
       String[] data = br.readLine().replace("\"", "").split(",");
@@ -81,6 +88,7 @@ public class RegularSort_csv_v2 {
     }
   }
 
+  // 依勝場數排序
   private static void sortTeamsInDivisions(Map<String, List<Team_v2>> leagueTeams) {
     leagueTeams.values().forEach(Collections::sort);
   }
