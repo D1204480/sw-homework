@@ -15,8 +15,9 @@ public class RegularSort_csv_v2 {
 
   public static void main(String[] args) {
     try {
-      setupLogger();
+      setupLogger();  // 建立日誌
       String filePath = "data/MLB_2024_regular.txt";
+
       List<Team_v2> _ALtop3List = new ArrayList<>();  // AL, 1~3名
       List<Team_v2> _ALlist = new ArrayList<>();  // AL,4~15名
       List<Team_v2> _NLtop3List = new ArrayList<>();  // NL, 1~3名
