@@ -1,0 +1,14 @@
+11月 02, 2024 12:04:56 下午 org.example.RegularSort_csv_v2 main
+INFO: 嘗試開啟檔案: data/MLB_2024_regular.txt
+11月 02, 2024 12:04:57 下午 org.example.RegularSort_csv_v2 main
+INFO: 程式正確執行結束
+11月 02, 2024 2:02:19 下午 org.example.RegularSort_csv_v2 main
+INFO: 嘗試開啟檔案: data/MLB_2024_regular.txt
+11月 02, 2024 2:02:20 下午 org.example.RegularSort_csv_v2 main
+INFO: 程式正確執行結束
+11月 02, 2024 2:17:29 下午 org.example.RegularSort_csv_v2$StandingsProcessor processStandings
+INFO: Processing file: data/MLB_2024_regular.txt
+11月 02, 2024 2:26:23 下午 org.example.RegularSort_csv_v2$StandingsProcessor processStandings
+INFO: Processing file: data/MLB_2024_regular.txt
+11月 02, 2024 2:35:30 下午 org.example.RegularSort_csv_v2$StandingsProcessor processStandings
+INFO: Processing file: data/MLB_2024_regular.txt

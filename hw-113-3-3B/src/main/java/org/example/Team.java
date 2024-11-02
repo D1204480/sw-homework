@@ -33,4 +33,5 @@ public class Team implements Comparator<Team> {
     }
     return team1.teamName.compareTo(team2.teamName);
   }
+
 }
