@@ -52,7 +52,7 @@ public class RegularSort_csv_v2 {
   }
 
   // 建立Map物件, 並先把key值設定好
-  private static Map<String, List<Team_v2>> initializeLeagueTeams() {
+  static Map<String, List<Team_v2>> initializeLeagueTeams() {
     return Map.of(
         "AL EAST", new ArrayList<>(),
         "AL CENTRAL", new ArrayList<>(),
@@ -64,7 +64,7 @@ public class RegularSort_csv_v2 {
   }
 
   // 讀檔案
-  private static void processFile(BufferedReader br, Map<String, List<Team_v2>> leagueTeams) throws IOException {
+  static void processFile(BufferedReader br, Map<String, List<Team_v2>> leagueTeams) throws IOException {
     String line;
     while ((line = br.readLine()) != null) {
       line = line.replace("\"", ""); // 去除雙引號
@@ -95,14 +95,14 @@ public class RegularSort_csv_v2 {
   }
 
   // 依勝、敗場數排序
-  private static void sortTeamsInDivisions(Map<String, List<Team_v2>> leagueTeams) {
+  static void sortTeamsInDivisions(Map<String, List<Team_v2>> leagueTeams) {
     leagueTeams.values().forEach(Collections::sort);
   }
 
   // 分成:前3名的陣列、第2~15名的陣列
-  private static void prepareTop3AndLeagueLists(List<Team_v2> _ALtop3List, List<Team_v2> _ALlist,
-                                                List<Team_v2> _NLtop3List, List<Team_v2> _NLlist,
-                                                Map<String, List<Team_v2>> leagueTeams) {
+  static void prepareTop3AndLeagueLists(List<Team_v2> _ALtop3List, List<Team_v2> _ALlist,
+                                        List<Team_v2> _NLtop3List, List<Team_v2> _NLlist,
+                                        Map<String, List<Team_v2>> leagueTeams) {
     leagueTeams.forEach((league, teams) -> {
       if (league.startsWith("AL")) {
         _ALtop3List.add(teams.get(0));  // 第1名球隊
@@ -115,8 +115,8 @@ public class RegularSort_csv_v2 {
   }
 
   // 印出對戰表
-  private static void printSchedule(List<Team_v2> _ALtop3List, List<Team_v2> _ALlist,
-                                    List<Team_v2> _NLtop3List, List<Team_v2> _NLlist) {
+  static void printSchedule(List<Team_v2> _ALtop3List, List<Team_v2> _ALlist,
+                            List<Team_v2> _NLtop3List, List<Team_v2> _NLlist) {
     System.out.println("(AMERICAN LEAGUE)");
     printTeamRanks(_ALtop3List, _ALlist);
     System.out.println("(NATIONAL LEAGUE)");
