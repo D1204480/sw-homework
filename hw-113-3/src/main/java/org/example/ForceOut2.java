@@ -47,6 +47,10 @@ public class ForceOut2 {
     System.out.println(forceOut2.getForceOut(1,0,1));  // 1B, 2B
     System.out.println(forceOut2.getForceOut(0,0,1));  // 1B
     System.out.println(forceOut2.getForceOut(1,1,1));  // 1B, 2B, 3B, HB
+    System.out.println(forceOut2.getForceOut(1,0,1));  // 1B, 2B
+    System.out.println(forceOut2.getForceOut(0,1,1));  // 1B
+    System.out.println(forceOut2.getForceOut(0,1,0));  // 1B
+    System.out.println(forceOut2.getForceOut(0,0,1));  // 1B
 
   }
 
