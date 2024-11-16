@@ -24,7 +24,11 @@ class ForceOut2Test {
         () -> assertEquals(Set.of("1B", "2B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(1, 0, 0).split(", ")))),
         () -> assertEquals(Set.of("1B", "2B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(1, 0, 1).split(", ")))),
         () -> assertEquals(Set.of("1B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(0, 0, 1).split(", ")))),
-        () -> assertEquals(Set.of("1B", "2B", "3B", "HB"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(1, 1, 1).split(", "))))
+        () -> assertEquals(Set.of("1B", "2B", "3B", "HB"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(1, 1, 1).split(", ")))),
+        () -> assertEquals(Set.of("1B", "2B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(1, 0, 1).split(", ")))),
+        () -> assertEquals(Set.of("1B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(0, 1, 1).split(", ")))),
+        () -> assertEquals(Set.of("1B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(0, 1, 0).split(", ")))),
+        () -> assertEquals(Set.of("1B"), new HashSet<>(Arrays.asList(forceOut2.getForceOut(0, 0, 1).split(", "))))
     );
   }
 }

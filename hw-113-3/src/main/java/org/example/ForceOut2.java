@@ -30,6 +30,7 @@ public class ForceOut2 {
 
         } else {   // 當下的壘包無人
           forceOutSet.add(i + "B");
+          break;
         }
       }
     }
