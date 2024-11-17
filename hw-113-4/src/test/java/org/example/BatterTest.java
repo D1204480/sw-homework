@@ -10,7 +10,7 @@ class BatterTest {
 
   @ParameterizedTest
   @CsvFileSource(resources = "/base_hits_breakdown.csv", numLinesToSkip = 1)
-  void testWithCsvFileSource(int num, int num2) {
+  void parseFile(int num, int num2) {
     assertNotNull(num);
     assertNotNull(num2);
   }

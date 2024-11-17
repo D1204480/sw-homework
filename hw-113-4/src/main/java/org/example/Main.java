@@ -1,15 +1,22 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
   public static void main(String[] args) {
-    Batter batter = new Batter("pitch_breakdown.csv", "base_hits_breakdown.csv");
+    String pitchFile = "pitch_breakdown.csv";
+    String baseHitsFile = "base_hits_breakdown.csv";
+
+    Batter batter = new Batter(pitchFile, baseHitsFile);
     System.out.println(pitch(batter, "ball"));
     System.out.println(pitch(batter, "strike"));
 
   } // end of main
 
 
+  // 找出由打擊率高飄移至打擊率低的區域
   public static String pitch(Batter batter, String ballIsOK) {
     float[] rates = batter.getHitRate();  // 取得打擊率
 
@@ -18,14 +25,16 @@ public class Main {
     }
 
     StringBuilder str = new StringBuilder();
+    List<Integer> minIndexArr = new ArrayList<>();  // 儲存最小打擊率的區塊
     int maxRateIndex = 0;   // 初始化最大值的索引
     int minRateIndex = 0;   // 最小值索引
     float maxValue = rates[0];  // 假設第一個數值是打擊率最高值
     float minValue = rates[0];  // 初始最小值
-    int ballZone1 = 10 - 1;  // x1 壞球區
+    int ballZone1 = 10 - 1;  // x1 壞球區,因陣列從0算起,所以減1
     int ballZone2 = 11 - 1;  // x2 壞球區
     int ballZone3 = 12 - 1;  // x3 壞球區
     int ballZone4 = 13 - 1;  // x4 壞球區
+
 
     for (int i = 0; i < 9; i++) {
       if (rates[i] > maxValue) {
@@ -39,46 +48,91 @@ public class Main {
     }
 
     // 可以投壞球
-    for (int k = 0; k < rates.length; k++) {
-      if (ballIsOK.equals("ball")) {
-        if (rates[ballZone1] <= rates[0]) {
+    if (ballIsOK.equals("ball")) {
+      if (minRateIndex == 0) {
+        if (rates[ballZone1] < rates[0]) {
           minRateIndex = ballZone1;
-        } else if (rates[ballZone2] <= rates[2]) {
+        } else if (rates[ballZone1] == rates[0]) {
+          minIndexArr.add((int) rates[ballZone1]);
+          minIndexArr.add((int) rates[0]);
+        }
+      }
+
+      if (minRateIndex == 2) {
+        if (rates[ballZone2] < rates[2]) {
           minRateIndex = ballZone2;
-        } else if (rates[ballZone3] <= rates[6]) {
+        } else if (rates[ballZone2] == rates[2]) {
+          minIndexArr.add((int) rates[ballZone2]);
+          minIndexArr.add((int) rates[2]);
+        }
+      }
+
+      if (minRateIndex == 6) {
+        if (rates[ballZone3] < rates[6]) {
           minRateIndex = ballZone3;
-        } else if (rates[ballZone4] <= rates[8]) {
+        } else if (rates[ballZone3] == rates[6]) {
+          minIndexArr.add((int) rates[ballZone3]);
+          minIndexArr.add((int) rates[6]);
+        }
+      }
+
+      if (minRateIndex == 8) {
+        if (rates[ballZone4] < rates[8]) {
           minRateIndex = ballZone4;
+        } else if (rates[ballZone4] == rates[8]) {
+          minIndexArr.add((int) rates[ballZone4]);
+          minIndexArr.add((int) rates[8]);
         }
       }
     }
 
-    // 轉換索引為顯示文字
-    String minRateDisplay = convertIndexToDisplay(minRateIndex);
+    minIndexArr.add(minRateIndex);  // 加入List
 
-    // 將最大值和最小值的索引加到結果中
+    // 轉換索引為顯示文字
+    String[] minRateArr = convertIndexToDisplay(minIndexArr);
+
+    // 印出看結果
 //    str.append("Max Rate Index: ").append((maxRateIndex) + 1).append("\t");
 //    str.append("Min Rate Index: ").append((minRateDisplay)).append("\t");;
-    str.append("(" + (maxRateIndex + 1) + ", " + minRateDisplay + ")");
+
+    // 將最大值和最小值的索引加到結果中
+    for (String s : minRateArr) {
+      str.append("(").append(maxRateIndex + 1).append(", ").append(s).append(")");
+    }
 
     return str.toString();
   } // end of pitch
 
 
   // 將索引轉換為顯示文字的輔助方法
-  private static String convertIndexToDisplay(int index) {
-    switch (index) {
-      case 9:  // ballZone1
-        return "x1";
-      case 10:  // ballZone2
-        return "x2";
-      case 11:  // ballZone3
-        return "x3";
-      case 12:  // ballZone4
-        return "x4";
-      default:
-        return String.valueOf(index + 1);
+  private static String[] convertIndexToDisplay(List<Integer> indexes) {
+    // 創建與輸入List相同大小的數組
+    String[] minIndexes = new String[indexes.size()];
+
+    for (int i = 0; i < indexes.size(); i++) {
+      // 獲取實際的索引值
+      int index = indexes.get(i);
+
+      switch (index) {
+        case 9:  // ballZone1
+          minIndexes[i] = "x1";
+          break;
+        case 10:  // ballZone2
+          minIndexes[i] = "x2";
+          break;
+        case 11:  // ballZone3
+          minIndexes[i] = "x3";
+          break;
+        case 12:  // ballZone4
+          minIndexes[i] = "x4";
+          break;
+        default:
+          minIndexes[i] = String.valueOf(i + 1);
+          break;
+      }
     }
+    return minIndexes;
   } // ens of convertIndexToDisplay
+
 
 } // end of Main
