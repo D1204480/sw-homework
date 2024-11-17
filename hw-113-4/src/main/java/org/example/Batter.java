@@ -31,7 +31,7 @@ public class Batter {
     this.hitRate = calHitsRate(baseHitsArr, pitchArr);
   }
 
-  // 建構子 3: 無參數建構子（如果真的需要的話）
+  // 建構子3: 無參數建構子（如果真的需要的話）
   public Batter() {
     this.hitRate = new float[COLUMN_COUNT];  // 初始化為空陣列而不是 null
   }
@@ -40,7 +40,6 @@ public class Batter {
 
     String pitchFile = "pitch_breakdown.csv";
     String baseHitsFile = "base_hits_breakdown.csv";
-
 
     int[] pitchArr;
     int[] baseHitsArr;
@@ -71,25 +70,32 @@ public class Batter {
 
   //讀檔
   public static int[] parseFile(String filename) {
-    int column = 13;
-    int[] tempArr = new int[column];   // 建立陣列
+    int[] tempArr = new int[COLUMN_COUNT];   // 建立陣列
 
     try (BufferedReader br = new BufferedReader(new InputStreamReader(
         Batter.class.getClassLoader().getResourceAsStream(filename)))) {
+
+      if (br == null) {
+        throw new IOException("找不到檔案: " + filename);
+      }
 
       String line = br.readLine();  // 跳過第一行表頭
       while ((line = br.readLine()) != null) {
         assert line != null : "讀不到資料";
         String[] data = line.split(",");
 
-        if (data.length == column) {
-          for (int i = 0; i < data.length; i++) {
-            tempArr[i] = (Integer.parseInt(data[i]));
+        if (data.length == COLUMN_COUNT) {
+          try {
+            for (int i = 0; i < data.length; i++) {
+              tempArr[i] = Integer.parseInt(data[i].trim());
+            }
+          } catch (NumberFormatException e) {
+            return null; // 數據格式錯誤
           }
         }
       }
 
-    } catch (IOException e) {
+    } catch (IOException | NullPointerException e) {
       e.printStackTrace();
       return null; // 若發生錯誤，返回 null
     }
@@ -100,8 +106,7 @@ public class Batter {
 
 
   public static float[] calHitsRate(int[] hitArr, int[] pitchArr) {
-    int column = 13;
-    float[] tempArr = new float[column];   // 建立物件
+    float[] tempArr = new float[COLUMN_COUNT];   // 建立物件
 
     assert hitArr != null : "base_hits 陣列為空值";
     assert pitchArr != null : "pitch 陣列為空值";
