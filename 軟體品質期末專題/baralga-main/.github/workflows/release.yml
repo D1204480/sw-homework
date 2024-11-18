@@ -1,0 +1,35 @@
+name: Build
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
+      with:
+        strip_v: false
+    - name: Use tag
+      run: echo ${{steps.tag.outputs.tag}}
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+    - name: Build with Maven
+      run: ./mvnw -B package -Drevision=${{steps.tag.outputs.tag}}
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          baralga-installer/target/*.jar
+          baralga-installer/target/*.zip

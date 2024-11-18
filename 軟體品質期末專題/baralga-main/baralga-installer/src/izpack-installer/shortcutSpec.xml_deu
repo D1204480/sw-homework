@@ -1,0 +1,27 @@
+<izpack:shortcuts version="5.0"
+                  xmlns:izpack="http://izpack.org/schema/shortcuts"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://izpack.org/schema/shortcuts http://izpack.org/schema/5.0/izpack-shortcuts-5.0.xsd">
+  <skipIfNotSupported/>
+  <programGroup defaultName="$APP_NAME"
+                location="applications"/>
+  <shortcut
+    name="$APP_NAME"
+    target="$INSTALL_PATH\baralga-core-${project.version}.jar"
+    commandLine=""
+    workingDirectory="$INSTALL_PATH"
+    description="Zeiterfassung fuer Projekte."
+    iconFile="$INSTALL_PATH\Baralga-Tray.ico"
+    iconIndex="0"
+    initialState="normal"
+    programGroup="yes"
+    desktop="yes"
+    applications="yes"
+    startMenu="yes"
+    startup="no"
+    type="Application"
+    >
+
+    <createForPack name="Base"/>
+  </shortcut>
+</izpack:shortcuts>
