@@ -147,7 +147,9 @@ public class Main {
   // 比較好,壞球區打擊率
   private static List<Integer> compareHitSRate(int index, float[] rates) {
     float min;
+    float temp;
     int minIndex = 0;
+    float[] compare = new float[3];
     List<Integer> ballIndex = new ArrayList<>();
 
     switch (index) {
@@ -163,6 +165,36 @@ public class Main {
       break;
 
       case 1:  // 比較1,9,10區
+        compare[0] = rates[1];
+        compare[1] = rates[9];
+        compare[2] = rates[10];
+
+        // 找出最小值
+        for (int i = 0; i < compare.length; i++) {
+          if (compare[i] > compare[i + 1]) {
+            temp = compare[i];
+            compare[i] = compare[i + 1];
+            compare[i + 1] = temp;
+
+            min = compare[i];
+            minIndex = i;
+          }
+        }
+
+        
+        if (rates[1] < rates[9]) {
+          if (rates[1] < rates[10]) {
+            min = rates[1];
+            minIndex = 1;
+            ballIndex.add(minIndex);
+
+            if (rates[9] == min) {
+              ballIndex.add(9);
+            } else if (rates[10] == min) {
+              ballIndex.add(10);
+            }
+          }
+        }
       break;
 
       case 2:  // 比較2,10
