@@ -145,19 +145,19 @@ public class Main {
   } // ens of convertIndexToDisplay
 
   // 比較好,壞球區打擊率
-  private static int[] compareHitSRate(int index, float[] rates) {
+  private static List<Integer> compareHitSRate(int index, float[] rates) {
     float min;
     int minIndex = 0;
-    int[] ballIndex = new int[3];
+    List<Integer> ballIndex = new ArrayList<>();
 
     switch (index) {
       case 0:  // 比較0,9區
         if (rates[9] < rates[0]) {
           minIndex = 9;
-          ballIndex[0] = minIndex;
+          ballIndex.add(minIndex);
         } else if (rates[9] == rates[0]) {
-          ballIndex[0] = 0;
-          ballIndex[1] = 9;
+          ballIndex.add(0);
+          ballIndex.add(9);
         }
 //        return ballIndex;
       break;
@@ -168,10 +168,10 @@ public class Main {
       case 2:  // 比較2,10
         if (rates[10] < rates[2]) {
           minIndex = 10;
-          ballIndex[0] = minIndex;
-        } else if (rates[9] == rates[0]) {
-          ballIndex[0] = 10;
-          ballIndex[1] = 2;
+          ballIndex.add(minIndex);
+        } else if (rates[10] == rates[2]) {
+          ballIndex.add(10);
+          ballIndex.add(2);
         }
 //        return ballIndex;
         break;
@@ -182,10 +182,10 @@ public class Main {
       case 6:  // 比較6,11
         if (rates[11] < rates[6]) {
           minIndex = 11;
-          ballIndex[0] = minIndex;
+          ballIndex.add(minIndex);
         } else if (rates[11] == rates[6]) {
-          ballIndex[0] = 11;
-          ballIndex[1] = 6;
+          ballIndex.add(11);
+          ballIndex.add(6);
         }
 //        return ballIndex;
       break;
@@ -194,10 +194,10 @@ public class Main {
       case 8:  // 比較8,12
         if (rates[12] < rates[8]) {
           minIndex = 12;
-          ballIndex[0] = minIndex;
+          ballIndex.add(minIndex);
         } else if (rates[12] == rates[8]) {
-          ballIndex[0] = 12;
-          ballIndex[1] = 8;
+          ballIndex.add(12);
+          ballIndex.add(8);
         }
 //        return ballIndex;
       break;
