@@ -67,13 +67,16 @@ class BatterTest {
 
 
 
-  @Test
-  void parseFile() {
-  }
 
   @Test
   void calHitsRate() {
   }
 
+  // 輔助方法：建立測試檔案
+  private void createTestFile(String filename, String content) throws IOException {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(TEST_DIR + filename))) {
+      writer.write(content);
+    }
+  }
 
 }

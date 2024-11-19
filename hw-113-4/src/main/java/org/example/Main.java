@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -51,6 +52,15 @@ public class Main {
     if (ballIsOK.equals("ball")) {
       if (minRateIndex == 0) {
         if (rates[ballZone1] < rates[0]) {
+          minRateIndex = ballZone1;
+        } else if (rates[ballZone1] == rates[0]) {
+          minIndexArr.add((int) rates[ballZone1]);
+          minIndexArr.add((int) rates[0]);
+        }
+      }
+
+      if (minRateIndex == 1) {
+        if (rates[ballZone1] < rates[1]) {
           minRateIndex = ballZone1;
         } else if (rates[ballZone1] == rates[0]) {
           minIndexArr.add((int) rates[ballZone1]);
@@ -134,5 +144,65 @@ public class Main {
     return minIndexes;
   } // ens of convertIndexToDisplay
 
+  // 比較好,壞球區打擊率
+  private static int[] compareHitSRate(int index, float[] rates) {
+    float min;
+    int minIndex = 0;
+    int[] ballIndex = new int[3];
 
+    switch (index) {
+      case 0:  // 比較0,9區
+        if (rates[9] < rates[0]) {
+          minIndex = 9;
+          ballIndex[0] = minIndex;
+        } else if (rates[9] == rates[0]) {
+          ballIndex[0] = 0;
+          ballIndex[1] = 9;
+        }
+//        return ballIndex;
+      break;
+
+      case 1:  // 比較1,9,10區
+      break;
+
+      case 2:  // 比較2,10
+        if (rates[10] < rates[2]) {
+          minIndex = 10;
+          ballIndex[0] = minIndex;
+        } else if (rates[9] == rates[0]) {
+          ballIndex[0] = 10;
+          ballIndex[1] = 2;
+        }
+//        return ballIndex;
+        break;
+
+      case 3:  // 比較3,9,10
+      case 5:  // 比較5,10,12
+
+      case 6:  // 比較6,11
+        if (rates[11] < rates[6]) {
+          minIndex = 11;
+          ballIndex[0] = minIndex;
+        } else if (rates[11] == rates[6]) {
+          ballIndex[0] = 11;
+          ballIndex[1] = 6;
+        }
+//        return ballIndex;
+      break;
+
+      case 7:  // 比較7,11,12
+      case 8:  // 比較8,12
+        if (rates[12] < rates[8]) {
+          minIndex = 12;
+          ballIndex[0] = minIndex;
+        } else if (rates[12] == rates[8]) {
+          ballIndex[0] = 12;
+          ballIndex[1] = 8;
+        }
+//        return ballIndex;
+      break;
+
+    }
+    return ballIndex;
+  }
 } // end of Main
