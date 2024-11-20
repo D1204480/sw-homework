@@ -90,14 +90,14 @@ public class Batter {
               tempArr[i] = Integer.parseInt(data[i].trim());
             }
           } catch (NumberFormatException e) {
-            return null; // 數據格式錯誤
+            return new int[0]; // 數據格式錯誤
           }
         }
       }
 
     } catch (IOException | NullPointerException e) {
       e.printStackTrace();
-      return null; // 若發生錯誤，返回 null
+      return new int[0]; // 若發生錯誤，返回 null
     }
 
     return tempArr;
