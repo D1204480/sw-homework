@@ -1,10 +1,12 @@
 package org.example;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,14 +24,33 @@ class MainTest {
         throw new RuntimeException(e);
       }
     }
+
+    // 新增 compareZonesTest 方法
+    public static void compareZonesTest(float[] rates, List<Integer> ballIndex,
+                                        int zone1, int zone2) {
+      try {
+        Method method = Main.class.getDeclaredMethod("compareZones",
+            float[].class, List.class, int.class, int.class);
+        method.setAccessible(true);
+        method.invoke(null, rates, ballIndex, zone1, zone2);
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 
   private float[] rates;
+  private List<Integer> ballIndex;
 
   @BeforeEach
   void setUp() {
     // 初始化測試用的打擊率陣列
     rates = new float[13];
+    // 設置預設打擊率
+    for (int i = 0; i < rates.length; i++) {
+      rates[i] = 0.300f;
+    }
+    ballIndex = new ArrayList<>();
   }
 
   @Test
@@ -54,7 +75,7 @@ class MainTest {
     rates[0] = 0.200f;
     rates[9] = 0.300f;
     result = MainWrapper.compareHitsRateTest(0, rates);
-    assertEquals(0, result.size());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -164,4 +185,113 @@ class MainTest {
     assertTrue(result.isEmpty());
   }
 
+
+  @Test
+  @DisplayName("測試 compareZones: 第一區較低")
+  void testCompareZonesFirstLower() {
+    rates[0] = 0.200f;  // 較低
+    rates[9] = 0.300f;  // 較高
+
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+
+    assertEquals(1, ballIndex.size(), "應該只有一個結果");
+    assertEquals(0, ballIndex.get(0), "應該選擇打擊率較低的區域");
+  }
+
+  @Test
+  @DisplayName("測試 compareZones: 第二區較低")
+  void testCompareZonesSecondLower() {
+    rates[0] = 0.300f;  // 較高
+    rates[9] = 0.200f;  // 較低
+
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+
+    assertEquals(1, ballIndex.size(), "應該只有一個結果");
+    assertEquals(9, ballIndex.get(0), "應該選擇打擊率較低的區域");
+  }
+
+  @Test
+  @DisplayName("測試 compareZones: 打擊率相等")
+  void testCompareZonesEqual() {
+    rates[0] = 0.250f;
+    rates[9] = 0.250f;
+
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+
+    assertEquals(2, ballIndex.size(), "打擊率相等時應該有兩個結果");
+    assertTrue(ballIndex.contains(0), "應該包含第一個區域");
+    assertTrue(ballIndex.contains(9), "應該包含第二個區域");
+  }
+
+  @Test
+  @DisplayName("測試 compareZones: 所有實際使用的區域組合")
+  void testCompareZonesAllCombinations() {
+    // 測試 0,9 區域
+    rates[0] = 0.300f;
+    rates[9] = 0.200f;
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+    assertEquals(1, ballIndex.size());
+    assertEquals(9, ballIndex.get(0));
+    ballIndex.clear();
+
+    // 測試 2,10 區域
+    rates[2] = 0.300f;
+    rates[10] = 0.200f;
+    MainWrapper.compareZonesTest(rates, ballIndex, 2, 10);
+    assertEquals(1, ballIndex.size());
+    assertEquals(10, ballIndex.get(0));
+    ballIndex.clear();
+
+    // 測試 6,11 區域
+    rates[6] = 0.300f;
+    rates[11] = 0.200f;
+    MainWrapper.compareZonesTest(rates, ballIndex, 6, 11);
+    assertEquals(1, ballIndex.size());
+    assertEquals(11, ballIndex.get(0));
+    ballIndex.clear();
+
+    // 測試 8,12 區域
+    rates[8] = 0.300f;
+    rates[12] = 0.200f;
+    MainWrapper.compareZonesTest(rates, ballIndex, 8, 12);
+    assertEquals(1, ballIndex.size());
+    assertEquals(12, ballIndex.get(0));
+  }
+
+  @Test
+  @DisplayName("測試 compareZones: 極值差異")
+  void testCompareZonesExtremeValues() {
+    // 測試極小值差異
+    rates[0] = 0.001f;
+    rates[9] = 0.002f;
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+    assertEquals(1, ballIndex.size());
+    assertEquals(0, ballIndex.get(0));
+    ballIndex.clear();
+
+    // 測試極大值差異
+    rates[0] = 0.999f;
+    rates[9] = 0.998f;
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+    assertEquals(1, ballIndex.size());
+    assertEquals(9, ballIndex.get(0));
+  }
+
+  @Test
+  @DisplayName("測試 compareZones: 細微差異")
+  void testCompareZonesSmallDifferences() {
+    // 測試非常接近的值
+    rates[0] = 0.3001f;
+    rates[9] = 0.3000f;
+
+    MainWrapper.compareZonesTest(rates, ballIndex, 0, 9);
+
+    assertEquals(1, ballIndex.size());
+    assertEquals(9, ballIndex.get(0));
+  }
+
+  @AfterEach
+  void tearDown() {
+    ballIndex.clear();
+  }
 }

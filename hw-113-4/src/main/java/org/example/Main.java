@@ -286,9 +286,20 @@ public class Main {
 
   // 比較兩個區域
   private static void compareZones(float[] rates, List<Integer> ballIndex, int zone1, int zone2) {
-    if (rates[zone2] < rates[zone1]) {
-      ballIndex.add(zone2);
-    } else if (rates[zone2] == rates[zone1]) {
+    // 參數檢查
+    if (rates == null || ballIndex == null ||
+        zone1 < 0 || zone2 < 0 ||
+        zone1 >= rates.length || zone2 >= rates.length) {
+      return;
+    }
+
+    // 比較打擊率
+    if (rates[zone1] < rates[zone2]) {
+      ballIndex.add(zone1);  // zone1 打擊率較低
+    } else if (rates[zone2] < rates[zone1]) {
+      ballIndex.add(zone2);  // zone2 打擊率較低
+    } else {
+      // 打擊率相等時，都加入
       ballIndex.add(zone1);
       ballIndex.add(zone2);
     }
