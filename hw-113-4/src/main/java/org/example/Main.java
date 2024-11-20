@@ -87,7 +87,6 @@ public class Main {
     return str.toString();
   } // end of pitch
 
-
   // 將索引轉換為顯示文字的輔助方法
   private static String[] convertIndexToDisplay(List<Integer> indexes) {
     // 創建與輸入List相同大小的數組
@@ -119,151 +118,191 @@ public class Main {
   } // ens of convertIndexToDisplay
 
   // 比較"好.壞球區"打擊率
+//  private static List<Integer> compareHitsRate(int index, float[] rates) {
+//    float min = 0;
+//    float temp;
+//    int minIndex = 0;
+//    float[] compare = new float[3];
+//    List<Integer> ballIndex = new ArrayList<>();
+//
+//    switch (index) {
+//      case 0:  // 比較0,9區
+//        if (rates[9] < rates[0]) {
+//          minIndex = 9;
+//          ballIndex.add(minIndex);
+//        } else if (rates[9] == rates[0]) {
+//          ballIndex.add(0);
+//          ballIndex.add(9);
+//        }
+//      break;
+//
+//      case 1:  // 比較1,9,10區
+//        compare[0] = rates[1];
+//        compare[1] = rates[9];
+//        compare[2] = rates[10];
+//
+//        // 找出最小值
+//        for (int i = 0; i < compare.length; i++) {
+//          if (compare[i] > compare[i + 1]) {
+//            temp = compare[i];
+//            compare[i] = compare[i + 1];
+//            compare[i + 1] = temp;
+//            min = compare[i];
+//          }
+//        }
+//
+//        if (rates[1] == min) {
+//          ballIndex.add(1);
+//        } else if (rates[9] == min) {
+//          ballIndex.add(9);
+//        } else {
+//          ballIndex.add(10);
+//        }
+//        break;
+//
+//      case 2:  // 比較2,10
+//        if (rates[10] < rates[2]) {
+//          minIndex = 10;
+//          ballIndex.add(minIndex);
+//        } else if (rates[10] == rates[2]) {
+//          ballIndex.add(10);
+//          ballIndex.add(2);
+//        }
+//        break;
+//
+//      case 3:  // 比較3,9,10
+//        compare[0] = rates[3];
+//        compare[1] = rates[9];
+//        compare[2] = rates[10];
+//
+//        // 找出最小值
+//        for (int i = 0; i < compare.length; i++) {
+//          if (compare[i] > compare[i + 1]) {
+//            temp = compare[i];
+//            compare[i] = compare[i + 1];
+//            compare[i + 1] = temp;
+//            min = compare[i];
+//          }
+//        }
+//
+//        if (rates[3] == min) {
+//          ballIndex.add(3);
+//        } else if (rates[9] == min) {
+//          ballIndex.add(9);
+//        } else {
+//          ballIndex.add(10);
+//        }
+//        break;
+//
+//      case 5:  // 比較5,10,12
+//        compare[0] = rates[5];
+//        compare[1] = rates[10];
+//        compare[2] = rates[12];
+//
+//        // 找出最小值
+//        for (int i = 0; i < compare.length; i++) {
+//          if (compare[i] > compare[i + 1]) {
+//            temp = compare[i];
+//            compare[i] = compare[i + 1];
+//            compare[i + 1] = temp;
+//            min = compare[i];
+//          }
+//        }
+//
+//        if (rates[5] == min) {
+//          ballIndex.add(5);
+//        } else if (rates[10] == min) {
+//          ballIndex.add(10);
+//        } else {
+//          ballIndex.add(12);
+//        }
+//        break;
+//
+//      case 6:  // 比較6,11
+//        if (rates[11] < rates[6]) {
+//          minIndex = 11;
+//          ballIndex.add(minIndex);
+//        } else if (rates[11] == rates[6]) {
+//          ballIndex.add(11);
+//          ballIndex.add(6);
+//        }
+//      break;
+//
+//      case 7:  // 比較7,11,12
+//        compare[0] = rates[7];
+//        compare[1] = rates[11];
+//        compare[2] = rates[12];
+//
+//        // 找出最小值
+//        for (int i = 0; i < compare.length; i++) {
+//          if (compare[i] > compare[i + 1]) {
+//            temp = compare[i];
+//            compare[i] = compare[i + 1];
+//            compare[i + 1] = temp;
+//            min = compare[i];
+//          }
+//        }
+//
+//        if (rates[7] == min) {
+//          ballIndex.add(7);
+//        } else if (rates[11] == min) {
+//          ballIndex.add(11);
+//        } else {
+//          ballIndex.add(12);
+//        }
+//        break;
+//
+//      case 8:  // 比較8,12
+//        if (rates[12] < rates[8]) {
+//          minIndex = 12;
+//          ballIndex.add(minIndex);
+//        } else if (rates[12] == rates[8]) {
+//          ballIndex.add(12);
+//          ballIndex.add(8);
+//        }
+//      break;
+//
+//    }
+//    return ballIndex;
+//  }
   private static List<Integer> compareHitsRate(int index, float[] rates) {
-    float min = 0;
-    float temp;
-    int minIndex = 0;
-    float[] compare = new float[3];
     List<Integer> ballIndex = new ArrayList<>();
+    if (rates == null || index < 0 || index >= rates.length) {
+      return ballIndex;
+    }
 
     switch (index) {
-      case 0:  // 比較0,9區
-        if (rates[9] < rates[0]) {
-          minIndex = 9;
-          ballIndex.add(minIndex);
-        } else if (rates[9] == rates[0]) {
-          ballIndex.add(0);
-          ballIndex.add(9);
-        }
-      break;
-
-      case 1:  // 比較1,9,10區
-        compare[0] = rates[1];
-        compare[1] = rates[9];
-        compare[2] = rates[10];
-
-        // 找出最小值
-        for (int i = 0; i < compare.length; i++) {
-          if (compare[i] > compare[i + 1]) {
-            temp = compare[i];
-            compare[i] = compare[i + 1];
-            compare[i + 1] = temp;
-            min = compare[i];
-          }
-        }
-
-        if (rates[1] == min) {
-          ballIndex.add(1);
-        } else if (rates[9] == min) {
-          ballIndex.add(9);
-        } else {
-          ballIndex.add(10);
-        }
-        break;
-
-      case 2:  // 比較2,10
-        if (rates[10] < rates[2]) {
-          minIndex = 10;
-          ballIndex.add(minIndex);
-        } else if (rates[10] == rates[2]) {
-          ballIndex.add(10);
-          ballIndex.add(2);
-        }
-        break;
-
-      case 3:  // 比較3,9,10
-        compare[0] = rates[3];
-        compare[1] = rates[9];
-        compare[2] = rates[10];
-
-        // 找出最小值
-        for (int i = 0; i < compare.length; i++) {
-          if (compare[i] > compare[i + 1]) {
-            temp = compare[i];
-            compare[i] = compare[i + 1];
-            compare[i + 1] = temp;
-            min = compare[i];
-          }
-        }
-
-        if (rates[3] == min) {
-          ballIndex.add(3);
-        } else if (rates[9] == min) {
-          ballIndex.add(9);
-        } else {
-          ballIndex.add(10);
-        }
-        break;
-
-      case 5:  // 比較5,10,12
-        compare[0] = rates[5];
-        compare[1] = rates[10];
-        compare[2] = rates[12];
-
-        // 找出最小值
-        for (int i = 0; i < compare.length; i++) {
-          if (compare[i] > compare[i + 1]) {
-            temp = compare[i];
-            compare[i] = compare[i + 1];
-            compare[i + 1] = temp;
-            min = compare[i];
-          }
-        }
-
-        if (rates[5] == min) {
-          ballIndex.add(5);
-        } else if (rates[10] == min) {
-          ballIndex.add(10);
-        } else {
-          ballIndex.add(12);
-        }
-        break;
-
-      case 6:  // 比較6,11
-        if (rates[11] < rates[6]) {
-          minIndex = 11;
-          ballIndex.add(minIndex);
-        } else if (rates[11] == rates[6]) {
-          ballIndex.add(11);
-          ballIndex.add(6);
-        }
-      break;
-
-      case 7:  // 比較7,11,12
-        compare[0] = rates[7];
-        compare[1] = rates[11];
-        compare[2] = rates[12];
-
-        // 找出最小值
-        for (int i = 0; i < compare.length; i++) {
-          if (compare[i] > compare[i + 1]) {
-            temp = compare[i];
-            compare[i] = compare[i + 1];
-            compare[i + 1] = temp;
-            min = compare[i];
-          }
-        }
-
-        if (rates[7] == min) {
-          ballIndex.add(7);
-        } else if (rates[11] == min) {
-          ballIndex.add(11);
-        } else {
-          ballIndex.add(12);
-        }
-        break;
-
-      case 8:  // 比較8,12
-        if (rates[12] < rates[8]) {
-          minIndex = 12;
-          ballIndex.add(minIndex);
-        } else if (rates[12] == rates[8]) {
-          ballIndex.add(12);
-          ballIndex.add(8);
-        }
-      break;
-
+      case 0 -> compareZones(rates, ballIndex, 0, 9);
+      case 1 -> findMinZone(rates, ballIndex, 1, 9, 10);
+      case 2 -> compareZones(rates, ballIndex, 2, 10);
+      case 3 -> findMinZone(rates, ballIndex, 3, 9, 10);
+      case 5 -> findMinZone(rates, ballIndex, 5, 10, 12);
+      case 6 -> compareZones(rates, ballIndex, 6, 11);
+      case 7 -> findMinZone(rates, ballIndex, 7, 11, 12);
+      case 8 -> compareZones(rates, ballIndex, 8, 12);
     }
     return ballIndex;
+  }
+
+  // 比較兩個區域
+  private static void compareZones(float[] rates, List<Integer> ballIndex, int zone1, int zone2) {
+    if (rates[zone2] < rates[zone1]) {
+      ballIndex.add(zone2);
+    } else if (rates[zone2] == rates[zone1]) {
+      ballIndex.add(zone1);
+      ballIndex.add(zone2);
+    }
+  }
+
+  // 找出三個區域中的最小值
+  private static void findMinZone(float[] rates, List<Integer> ballIndex, int zone1, int zone2, int zone3) {
+    float min = Math.min(Math.min(rates[zone1], rates[zone2]), rates[zone3]);
+    if (rates[zone1] == min) {
+      ballIndex.add(zone1);
+    } else if (rates[zone2] == min) {
+      ballIndex.add(zone2);
+    } else {
+      ballIndex.add(zone3);
+    }
   }
 } // end of Main
