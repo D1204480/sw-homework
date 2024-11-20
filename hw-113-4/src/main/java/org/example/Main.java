@@ -11,8 +11,8 @@ public class Main {
     String baseHitsFile = "base_hits_breakdown.csv";
 
     Batter batter = new Batter(pitchFile, baseHitsFile);
-    System.out.println(pitch(batter, "ball"));
-    System.out.println(pitch(batter, "strike"));
+    System.out.println(pitch(batter, "true"));
+    System.out.println(pitch(batter, "false"));
 
   } // end of main
 
@@ -47,56 +47,30 @@ public class Main {
         minRateIndex = i;  // 更新最小值的索引
       }
     }
+    minIndexArr.add(minRateIndex);
 
     // 可以投壞球
-    if (ballIsOK.equals("ball")) {
+    if (ballIsOK.equals("true")) {
       if (minRateIndex == 0) {
-        if (rates[ballZone1] < rates[0]) {
-          minRateIndex = ballZone1;
-        } else if (rates[ballZone1] == rates[0]) {
-          minIndexArr.add((int) rates[ballZone1]);
-          minIndexArr.add((int) rates[0]);
-        }
-      }
-
-      if (minRateIndex == 1) {
-        if (rates[ballZone1] < rates[1]) {
-          minRateIndex = ballZone1;
-        } else if (rates[ballZone1] == rates[0]) {
-          minIndexArr.add((int) rates[ballZone1]);
-          minIndexArr.add((int) rates[0]);
-        }
-      }
-
-      if (minRateIndex == 2) {
-        if (rates[ballZone2] < rates[2]) {
-          minRateIndex = ballZone2;
-        } else if (rates[ballZone2] == rates[2]) {
-          minIndexArr.add((int) rates[ballZone2]);
-          minIndexArr.add((int) rates[2]);
-        }
-      }
-
-      if (minRateIndex == 6) {
-        if (rates[ballZone3] < rates[6]) {
-          minRateIndex = ballZone3;
-        } else if (rates[ballZone3] == rates[6]) {
-          minIndexArr.add((int) rates[ballZone3]);
-          minIndexArr.add((int) rates[6]);
-        }
-      }
-
-      if (minRateIndex == 8) {
-        if (rates[ballZone4] < rates[8]) {
-          minRateIndex = ballZone4;
-        } else if (rates[ballZone4] == rates[8]) {
-          minIndexArr.add((int) rates[ballZone4]);
-          minIndexArr.add((int) rates[8]);
-        }
+        minIndexArr = compareHitsRate(0, rates);
+      } else if (minRateIndex == 1) {
+        minIndexArr = compareHitsRate(1, rates);
+      } else if (minRateIndex == 2) {
+        minIndexArr = compareHitsRate(2, rates);
+      } else if (minRateIndex == 3) {
+        minIndexArr = compareHitsRate(3, rates);
+      } else if (minRateIndex == 4) {
+        minIndexArr = compareHitsRate(4, rates);
+      } else if (minRateIndex == 5) {
+        minIndexArr = compareHitsRate(5, rates);
+      } else if (minRateIndex == 6) {
+        minIndexArr = compareHitsRate(6, rates);
+      } else if (minRateIndex == 7) {
+        minIndexArr = compareHitsRate(7, rates);
+      } else if (minRateIndex == 8) {
+        minIndexArr = compareHitsRate(8, rates);
       }
     }
-
-    minIndexArr.add(minRateIndex);  // 加入List
 
     // 轉換索引為顯示文字
     String[] minRateArr = convertIndexToDisplay(minIndexArr);
@@ -144,9 +118,9 @@ public class Main {
     return minIndexes;
   } // ens of convertIndexToDisplay
 
-  // 比較好,壞球區打擊率
-  private static List<Integer> compareHitSRate(int index, float[] rates) {
-    float min;
+  // 比較"好.壞球區"打擊率
+  private static List<Integer> compareHitsRate(int index, float[] rates) {
+    float min = 0;
     float temp;
     int minIndex = 0;
     float[] compare = new float[3];
@@ -161,7 +135,6 @@ public class Main {
           ballIndex.add(0);
           ballIndex.add(9);
         }
-//        return ballIndex;
       break;
 
       case 1:  // 比較1,9,10區
@@ -175,27 +148,18 @@ public class Main {
             temp = compare[i];
             compare[i] = compare[i + 1];
             compare[i + 1] = temp;
-
             min = compare[i];
-            minIndex = i;
           }
         }
 
-        
-        if (rates[1] < rates[9]) {
-          if (rates[1] < rates[10]) {
-            min = rates[1];
-            minIndex = 1;
-            ballIndex.add(minIndex);
-
-            if (rates[9] == min) {
-              ballIndex.add(9);
-            } else if (rates[10] == min) {
-              ballIndex.add(10);
-            }
-          }
+        if (rates[1] == min) {
+          ballIndex.add(1);
+        } else if (rates[9] == min) {
+          ballIndex.add(9);
+        } else {
+          ballIndex.add(10);
         }
-      break;
+        break;
 
       case 2:  // 比較2,10
         if (rates[10] < rates[2]) {
@@ -205,11 +169,55 @@ public class Main {
           ballIndex.add(10);
           ballIndex.add(2);
         }
-//        return ballIndex;
         break;
 
       case 3:  // 比較3,9,10
+        compare[0] = rates[3];
+        compare[1] = rates[9];
+        compare[2] = rates[10];
+
+        // 找出最小值
+        for (int i = 0; i < compare.length; i++) {
+          if (compare[i] > compare[i + 1]) {
+            temp = compare[i];
+            compare[i] = compare[i + 1];
+            compare[i + 1] = temp;
+            min = compare[i];
+          }
+        }
+
+        if (rates[3] == min) {
+          ballIndex.add(3);
+        } else if (rates[9] == min) {
+          ballIndex.add(9);
+        } else {
+          ballIndex.add(10);
+        }
+        break;
+
       case 5:  // 比較5,10,12
+        compare[0] = rates[5];
+        compare[1] = rates[10];
+        compare[2] = rates[12];
+
+        // 找出最小值
+        for (int i = 0; i < compare.length; i++) {
+          if (compare[i] > compare[i + 1]) {
+            temp = compare[i];
+            compare[i] = compare[i + 1];
+            compare[i + 1] = temp;
+            min = compare[i];
+          }
+        }
+
+        if (rates[5] == min) {
+          ballIndex.add(5);
+        } else if (rates[10] == min) {
+          ballIndex.add(10);
+        } else {
+          ballIndex.add(12);
+        }
+        break;
 
       case 6:  // 比較6,11
         if (rates[11] < rates[6]) {
@@ -219,10 +227,32 @@ public class Main {
           ballIndex.add(11);
           ballIndex.add(6);
         }
-//        return ballIndex;
       break;
 
       case 7:  // 比較7,11,12
+        compare[0] = rates[7];
+        compare[1] = rates[11];
+        compare[2] = rates[12];
+
+        // 找出最小值
+        for (int i = 0; i < compare.length; i++) {
+          if (compare[i] > compare[i + 1]) {
+            temp = compare[i];
+            compare[i] = compare[i + 1];
+            compare[i + 1] = temp;
+            min = compare[i];
+          }
+        }
+
+        if (rates[7] == min) {
+          ballIndex.add(7);
+        } else if (rates[11] == min) {
+          ballIndex.add(11);
+        } else {
+          ballIndex.add(12);
+        }
+        break;
+
       case 8:  // 比較8,12
         if (rates[12] < rates[8]) {
           minIndex = 12;
@@ -231,7 +261,6 @@ public class Main {
           ballIndex.add(12);
           ballIndex.add(8);
         }
-//        return ballIndex;
       break;
 
     }
