@@ -30,25 +30,27 @@ public class Main {
     int minRateIndex = 0;   // 最小值索引
     float maxValue = rates[0];  // 假設第一個數值是打擊率最高值
     float minValue = rates[0];  // 初始最小值, 好球區
-    float ballMinValue = rates[0];  // 初始最小值, 壞球區
-    int ballZone1 = 10 - 1;  // x1 壞球區,因陣列從0算起,所以減1
-    int ballZone2 = 11 - 1;  // x2 壞球區
-    int ballZone3 = 12 - 1;  // x3 壞球區
-    int ballZone4 = 13 - 1;  // x4 壞球區
 
-    // 好球帶打擊率
+    // 好球帶打擊率, 找出最高最低值
     for (int i = 0; i < 9; i++) {
       if (rates[i] > maxValue) {
         maxValue = rates[i];   // 更新最大值
         maxRateIndex = i;   // 更新最大值的索引
+      }
 
-      } else if (rates[i] < minValue) {
+      if (rates[i] < minValue) {
         minValue = rates[i];   // 更新最小值
+        findMinIndexArr.clear(); // 清除之前存的索引
         minRateIndex = i;  // 更新最小值的索引
       }
     }
-    findMinIndexArr.add(minRateIndex);
 
+    // 把所有最小值存入陣列
+    for (int i = 0; i < 9; i++) {
+      if (rates[i] == minValue) {
+        findMinIndexArr.add(i);
+      }
+    }
 
     // 比較包含壞球帶之打擊率
     if (ballIsOK.equals("true")) {
@@ -104,7 +106,7 @@ public class Main {
           minIndexes[i] = "x4";
           break;
         default:
-          minIndexes[i] = String.valueOf(i + 1);
+          minIndexes[i] = String.valueOf(index + 1);
           break;
       }
     }

@@ -80,24 +80,40 @@ public class Batter {
       }
 
       String line = br.readLine();  // 跳過第一行表頭
+      boolean hasValidData = false; // 添加標記來追蹤是否成功讀取到有效資料
       while ((line = br.readLine()) != null) {
         assert line != null : "讀不到資料";
         String[] data = line.split(",");
 
         if (data.length == COLUMN_COUNT) {
           try {
+            // 檢查每個欄位是否都是有效數字
+            for (String value : data) {
+              // 嘗試解析每個值，如果有任何一個不是數字，就會拋出異常
+              Integer.parseInt(value.trim());
+            }
+
+            // 所有檢查都通過後，才填充陣列
             for (int i = 0; i < data.length; i++) {
               tempArr[i] = Integer.parseInt(data[i].trim());
             }
+            hasValidData = true; // 標記已成功讀取資料
+
           } catch (NumberFormatException e) {
-            return new int[0]; // 數據格式錯誤
+            e.printStackTrace();
+            return null; // 數據格式錯誤
           }
         }
       }
 
+      // 如果沒有讀取到有效資料，返回null
+      if (!hasValidData) {
+        return null;
+      }
+
     } catch (IOException | NullPointerException e) {
       e.printStackTrace();
-      return new int[0]; // 若發生錯誤，返回 null
+      return null; // 若發生錯誤，返回 null
     }
 
     return tempArr;
@@ -118,7 +134,15 @@ public class Batter {
 
     for (int i = 0; i < hitArr.length; i++) {
       // 計算擊球率，並加入 tempList
-      tempArr[i] = (float) hitArr[i] / pitchArr[i];
+      if (pitchArr[i] != 0) {
+        try {
+          tempArr[i] = (float) hitArr[i] / pitchArr[i];
+
+        } catch (NumberFormatException e) {
+          e.printStackTrace();
+          return null; // 非數字
+        }
+      }
     }
 
     return tempArr;

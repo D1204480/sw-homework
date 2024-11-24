@@ -50,10 +50,7 @@ class BatterTest {
     String filename = "invalid_test.csv";
 
     int[] result = Batter.parseFile(filename);
-    assertEquals(COLUMN_COUNT, result.length);
-    for (int value : result) {
-      assertEquals(0, value);
-    }
+    assertNull(result);
   }
 
   @Test
